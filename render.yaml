@@ -25,10 +25,12 @@ services:
         sync: false
     autoDeploy: true
 
-staticSites:
-  - name: scope-coach-frontend
+  # Frontend - Static Site (FREE)
+  - type: web
+    runtime: static
+    name: scope-coach-frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: dist
+    staticPublishPath: ./dist
     envVars:
       - key: VITE_API_URL
         value: https://scope-coach-backend.onrender.com
