@@ -51,7 +51,7 @@ export const GENERAL_PUBLIC_QUESTIONS: InterviewQuestion[] = [
   },
   {
     id: "gp-7",
-    text: "How comfortable are you with sharing your health data if it could help with early disease detection?",
+    text: "How comfortable are you with sharing your development data if it could help with early disease detection?",
     category: "data-privacy",
     assessmentFocus: ["O", "E"],
   },
@@ -69,13 +69,13 @@ export const GENERAL_PUBLIC_QUESTIONS: InterviewQuestion[] = [
   },
   {
     id: "gp-10",
-    text: "What questions do you wish you could ask about your own health data?",
+    text: "What questions do you wish you could ask about your own development data?",
     category: "curiosity-gaps",
     assessmentFocus: ["S", "C", "O"],
   },
 ];
 
-// PLACEHOLDER: 11 Questions for Healthcare Experts
+// PLACEHOLDER: 11 Questions for Coaching Experts
 export const EXPERT_QUESTIONS: InterviewQuestion[] = [
   {
     id: "exp-1",
@@ -97,13 +97,13 @@ export const EXPERT_QUESTIONS: InterviewQuestion[] = [
   },
   {
     id: "exp-4",
-    text: "What would an ideal AI-assisted tool for metabolic health monitoring look like from a clinical standpoint?",
+    text: "What would an ideal AI-assisted tool for personal development monitoring look like from a clinical standpoint?",
     category: "ai-tool-vision",
     assessmentFocus: ["P", "C"],
   },
   {
     id: "exp-5",
-    text: "How do you assess patient health literacy and their ability to understand test results?",
+    text: "How do you assess patient situation awareness and their ability to understand test results?",
     category: "patient-literacy",
     assessmentFocus: ["S"],
   },
@@ -148,7 +148,7 @@ export const EXPERT_QUESTIONS: InterviewQuestion[] = [
 // PLACEHOLDER: Adaptive question selection logic
 export function selectNextQuestion(
   sessionState: any,
-  participantType: 'general_public' | 'healthcare_expert'
+  participantType: 'general_public' | 'coaching_expert'
 ): InterviewQuestion | null {
   // TODO: Implement intelligent question selection based on:
   // - Session phase

@@ -52,13 +52,13 @@ const DimensionRow: React.FC<{ code: string; data: any }> = ({ code, data }) => 
     return 'bg-indigo-200'; // LOW
   };
 
-  // Define spectrum labels for each dimension
+  // Define spectrum labels for each S.C.O.P.E. dimension
   const spectrums: Record<string, { left: string; right: string }> = {
-    HL: { left: "Low Understanding", right: "High Understanding" },
-    CM: { left: "Unaware", right: "Highly Familiar" },
-    DI: { left: "Siloed", right: "Integrated" },
-    DL: { left: "Tech Hesitant", right: "Tech Savvy" },
-    PR: { left: "Reactive", right: "Proactive" }
+    S: { left: "Limited Awareness", right: "Deep Self-Awareness" },
+    C: { left: "Few Options Seen", right: "Many Choices Recognized" },
+    O: { left: "Unclear Future", right: "Clear Vision" },
+    P: { left: "Disconnected", right: "Purpose-Aligned" },
+    E: { left: "Uncommitted", right: "Fully Engaged" }
   };
 
   const labels = spectrums[code] || { left: "Low", right: "High" };
@@ -252,15 +252,15 @@ export const LiveTracker: React.FC<{ state: SessionState }> = ({ state }) => {
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-bold text-slate-800 flex items-center gap-2">
                 <Activity className="w-4 h-4 text-indigo-500" />
-                Metabolic Health Readiness
+                S.C.O.P.E. FeedForward Assessment
               </h3>
               <span className="text-xs px-2 py-1 bg-slate-100 rounded text-slate-500 font-medium">
                  {state.conversationPhase}
               </span>
             </div>
             <div className="space-y-1">
-                {['HL', 'CM', 'DI', 'DL', 'PR'].map(key => (
-                    state.dimensions[key as keyof typeof state.dimensions] && 
+                {['S', 'C', 'O', 'P', 'E'].map(key => (
+                    state.dimensions[key as keyof typeof state.dimensions] &&
                     <DimensionRow key={key} code={key} data={state.dimensions[key as keyof typeof state.dimensions]} />
                 ))}
             </div>
@@ -308,8 +308,8 @@ export const FinalReport: React.FC<{ state: SessionState }> = ({ state }) => {
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
              <div className="w-full space-y-2">
                 <h4 className="font-bold text-slate-700 mb-4">Dimension Scores</h4>
-                {['HL', 'CM', 'DI', 'DL', 'PR'].map(key => (
-                    state.dimensions[key as keyof typeof state.dimensions] && 
+                {['S', 'C', 'O', 'P', 'E'].map(key => (
+                    state.dimensions[key as keyof typeof state.dimensions] &&
                     <DimensionRow key={key} code={key} data={state.dimensions[key as keyof typeof state.dimensions]} />
                 ))}
              </div>

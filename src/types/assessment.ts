@@ -1,6 +1,6 @@
 /**
  * S.C.O.P.E. Coach Assessment Types
- * Replaces Culture Coach dimensions with metabolic health assessment structure
+ * Replaces Culture Coach dimensions with personal development assessment structure
  */
 
 // PLACEHOLDER: Metabolic Health Assessment Dimensions
@@ -12,7 +12,7 @@ export interface MetabolicDimension {
 }
 
 export interface MetabolicAssessment {
-  // TODO: Define metabolic health assessment dimensions
+  // TODO: Define personal development assessment dimensions
   // Examples (to be validated with research):
   dimensions: {
     HL?: MetabolicDimension;  // Situation Awareness
@@ -38,7 +38,7 @@ export interface MetabolicAssessment {
   summary?: string;
   
   // S.C.O.P.E. Coach-specific (to be implemented)
-  participantType?: 'general_public' | 'healthcare_expert';
+  participantType?: 'general_public' | 'coaching_expert';
   roughData?: LifestyleDataSnapshot;
   preciseData?: ClinicalDataSnapshot;
   

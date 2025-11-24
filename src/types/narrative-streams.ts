@@ -22,7 +22,7 @@ export interface NarrativeStream {
   // TEMPORAL ENTANGLEMENT: Past-present-future collapse
   temporalLayers: TemporalLayers;
   
-  // GRAND NARRATIVES: Cultural/medical discourses shaping this stream
+  // GRAND NARRATIVES: Cultural/development discourses shaping this stream
   grandNarratives: GrandNarrative[];
   
   // LIVING STORY QUALITIES (replace confidence/score)
@@ -118,12 +118,12 @@ export interface TemporalLayers {
 }
 
 // =============================================================================
-// GRAND NARRATIVE: Cultural/Medical Discourses
+// GRAND NARRATIVE: Cultural/Development Discourses
 // =============================================================================
 
 export interface GrandNarrative {
-  discourse: string;      // e.g., "Medical authority", "Quantified self", "Genetic determinism"
-  category: 'medical_establishment' | 'wellness_industry' | 'family_legacy' | 'cultural_mythos' | 'tech_solutionism';
+  discourse: string;      // e.g., "Development authority", "Quantified self", "Genetic determinism"
+  category: 'development_establishment' | 'wellness_industry' | 'family_legacy' | 'cultural_mythos' | 'tech_solutionism';
   
   // HOW USER RELATES TO THIS GRAND NARRATIVE
   influence: 'dominant' | 'contested' | 'emerging' | 'fading';
