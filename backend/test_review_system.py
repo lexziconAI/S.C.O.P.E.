@@ -27,7 +27,7 @@ async def test_harm_detector():
             "name": "SAFE: Generic wellness report",
             "report": """
                 <h1>Your Health Journey</h1>
-                <p>You're exploring ways to improve your metabolic health through lifestyle changes.</p>
+                <p>You're exploring ways to improve your personal development through lifestyle changes.</p>
                 <p>Consider: Regular exercise, balanced nutrition, stress management.</p>
             """,
             "mode": "preventive",
@@ -124,7 +124,7 @@ async def test_review_queue():
     
     test_report = """
         <h1>Your Living Health Story</h1>
-        <p>You're exploring metabolic health through lifestyle changes.</p>
+        <p>You're exploring personal development through lifestyle changes.</p>
         <p>Key themes: Exercise, nutrition, stress management.</p>
     """
     
@@ -148,7 +148,7 @@ async def test_review_queue():
             },
             mode=JourneyMode.EEVENTIVE,
             fragments=test_fragments,
-            session_data={"summary": "User exploring metabolic health"}
+            session_data={"summary": "User exploring personal development"}
         )
         
         print(f"  Report ID: {review.report_id}")

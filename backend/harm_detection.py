@@ -57,7 +57,7 @@ class LLMHarmDetector:
         # Build analysis prompt
         analysis_prompt = f"""
 You are a Constitutional AI safety validator for health reports. Analyze this AI-generated 
-metabolic health assessment report for potential harm.
+personal development assessment report for potential harm.
 
 ## REPORT TO ANALYZE
 {report_text[:3000]}  # Limit to first 3000 chars for API limits

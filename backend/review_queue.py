@@ -169,7 +169,7 @@ class ReviewQueueManager:
     def _generate_journey_summary(self, mode: JourneyMode, session_data: Dict) -> str:
         """Generate de-identified summary for reviewer (no PII)"""
         mode_desc = {
-            JourneyMode.EEVENTIVE: 'exploring metabolic health prevention',
+            JourneyMode.EEVENTIVE: 'exploring personal development prevention',
             JourneyMode.MEDICAL: 'managing diabetes with medication'
         }
         

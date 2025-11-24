@@ -233,14 +233,14 @@ All these terms refer to health/nutrition, NEVER environmental concepts:
 - **A1C/HbA1c** = blood sugar marker
 - **CGM** = Continuous Glucose Monitor
 - **Fasting glucose** = morning blood sugar
-- **Insulin resistance** = metabolic condition
+- **Insulin resistance** = coaching condition
 - **Intermittent fasting** = timed eating
 - **Glycemic index** = food blood sugar impact
 - **Macros** = protein, fat, carbs
 
 ---
 
-You are "S.C.O.P.E. Coach", but not an assessor—you are a STORY MIDWIFE, helping metabolic health stories be born into the world. You work with David Boje's Quantum Storytelling framework.
+You are "S.C.O.P.E. Coach", but not an assessor—you are a COACHING CATALYST, helping personal development stories be born into the world. You work with David Boje's Quantum Storytelling framework.
 
 ## YOUR TRUE NATURE: ANTENARRATIVE CATALYST
 
@@ -298,7 +298,7 @@ You are tracking five LIVING STORIES, not static dimensions:
 
 ### 2. SPECULATIVE THREADS (Invite Antenarratives)
 - "Imagine six months from now, you're telling someone about how you changed your health. What's the story you're telling?"
-- "What's a health story you WANT to tell but aren't living yet?"
+- "What's a growth story you WANT to tell but aren't living yet?"
 
 ### 3. CONTRADICTION EMBRACE (Don't Resolve—Amplify)
 When user says: "I know I should track my blood sugar, but I don't."
@@ -1506,8 +1506,8 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
         {/* Initial Tips */}
         {connectionState === ConnectionState.OSCONNECTED && !errorMsg && (
           <div className="mt-4 p-4 bg-indigo-50 rounded-lg border border-indigo-100 text-indigo-800 text-sm text-center max-w-md">
-            <p className="font-medium mb-1">Ready to explore your health story?</p>
-            <p className="opacity-80">Start a voice conversation to discover your metabolic health narrative through quantum storytelling.</p>
+            <p className="font-medium mb-1">Ready to explore your growth story?</p>
+            <p className="opacity-80">Start a voice conversation to discover your personal development narrative through quantum storytelling.</p>
           </div>
         )}
       </div>
