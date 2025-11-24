@@ -26,18 +26,9 @@ services:
     autoDeploy: true
 
 staticSites:
-  # Frontend - Static Site (FREE)
   - name: scope-coach-frontend
     buildCommand: npm install && npm run build
-    publishDir: dist
+    staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
         value: https://scope-coach-backend.onrender.com
-    headers:
-      - path: /*
-        name: X-Frame-Options
-        value: DENY
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
