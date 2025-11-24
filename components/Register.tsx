@@ -64,7 +64,7 @@ const Register: React.FC<RegisterProps> = ({ onRegisterSuccess, onSwitchToLogin 
             <UserPlus className="w-6 h-6" />
           </div>
           <h2 className="text-2xl font-bold text-slate-800">Create Account</h2>
-          <p className="text-slate-500">Start your cultural journey</p>
+          <p className="text-slate-500">Start your coaching journey with S.C.O.P.E.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

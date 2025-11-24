@@ -147,42 +147,149 @@ async def generate_report(request: schemas.ReportRequest, db: Session = Depends(
         return val * 20 if val <= 5 else val
 
     prompt = f"""
-    You are a S.C.O.P.E. Coach qualitative research synthesizer. Create a comprehensive research interview summary based on the participant's session data.
+    You are generating a S.C.O.P.E. FeedForward Report based on Danny Simms' S.C.O.P.E. FeedForward Model (7020TEN).
 
-    Participant Email: {request.email}
+    This is a FUTURE-FOCUSED coaching report - use feedforward language (what TO DO), not feedback (what was wrong).
 
-    KEY THEMES IDENTIFIED:
-    {', '.join(request.strengths) if request.strengths else 'None identified'}
+    Manager Email: {request.email}
 
-    AREAS FOR FURTHER EXPLORATION:
-    {', '.join(request.developmentPriorities) if request.developmentPriorities else 'None identified'}
+    STRENGTHS OBSERVED:
+    {', '.join(request.strengths) if request.strengths else 'Infer from conversation evidence below'}
 
-    INTERVIEW EVIDENCE LOG:
+    GROWTH OPPORTUNITIES:
+    {', '.join(request.developmentPriorities) if request.developmentPriorities else 'Infer from conversation evidence below'}
+
+    CONVERSATION EVIDENCE:
     {json.dumps(request.evidenceLog, indent=2)}
 
     SESSION SUMMARY: {request.summary}
 
-    Please write a professional research interview summary in Markdown format.
-    Structure it with:
-    1. Executive Summary - Key insights from this research interview
-    2. Thematic Analysis - Main themes that emerged with supporting quotes/evidence
-    3. Participant Perspectives - Notable viewpoints and experiences shared
-    4. Research Implications - How this contributes to the research questions
+    Generate a S.C.O.P.E. FeedForward Report in Markdown format with these sections:
 
-    Use an academic but accessible tone appropriate for qualitative research reporting.
+    ## S.C.O.P.E. FeedForward Report
+    *Future-Focused Coaching Conversation - Based on Danny Simms' S.C.O.P.E. FeedForward Model*
+
+    ### S - Situation (Score: X/100)
+    [Write a brief 1-2 sentence description of the coaching scenario based ONLY on conversation evidence. Do NOT include:
+    - Specific times (Friday, 2pm, tomorrow, this week)
+    - Specific locations (office, conference room)
+    - Specific relationship terms (direct report, team member)
+    - Any details not explicitly mentioned in the conversation
+    Keep it general: "Preparing for a conversation about [topic from evidence]"]
+
+    ### C - Choices (Score: X/100)
+    [ONLY list choices explicitly discussed in conversation. If no choices were discussed, write "[No choices discussed yet]"]
+    - **Choice A**: [From conversation or "[Not discussed]"]
+    - **Choice B**: [From conversation or "[Not discussed]"]
+
+    ### O - Outcomes (Score: X/100)
+    [ONLY describe outcomes mentioned in conversation. If not discussed, write "[Outcomes not yet explored]"]
+    - **If Choice A**: [From conversation or "[Not discussed]"]
+    - **If Choice B**: [From conversation or "[Not discussed]"]
+
+    ### P - Purpose (Score: X/100)
+    [ONLY include purpose/values explicitly mentioned. If not discussed, write "[Purpose not yet explored]"]
+
+    ### E - Engagement (Score: X/100)
+    [ONLY include engagement/commitment discussed. If not discussed, write "[Engagement not yet discussed]"]
+
+    ### Strengths
+    [List 2-3 specific things the manager already does well - ALWAYS infer these from any evidence provided]
+
+    ### Growth Opportunities
+    [List 2-3 specific ways to strengthen the conversation - ALWAYS infer these from any evidence provided]
+
+    ### Conversation Script
+    [Provide a natural, flowing script the manager can use. Do NOT include specific times like "Friday", "tomorrow", "2pm" - keep it timeless: "When we meet..."]
+
+    CRITICAL ANTI-HALLUCINATION RULES (FOLLOW STRICTLY):
+    - ONLY use information explicitly in the CONVERSATION EVIDENCE above
+    - NEVER invent or include:
+      * Days/times (Monday, Friday, tomorrow, next week, 2pm, morning)
+      * Locations (office, conference room, virtual meeting)
+      * Relationships (direct report, team member) unless explicitly stated
+      * People's names
+      * Meeting types (1:1, performance review, project kickoff)
+    - Use generic phrases instead:
+      * "When you have this conversation..."
+      * "The person you're coaching..."
+      * "In your upcoming discussion..."
+
+    IMPORTANT GUIDELINES:
+    - Use future tense ("you will," "they can") - this is feedforward, not feedback
+    - Score each component 0-100 based on specificity, clarity, and actionability
+    - ALWAYS infer strengths and growth opportunities even from brief data
+    - Keep language coaching-focused, professional, and growth-oriented
+    - No medical, diagnostic, or academic jargon
     """
     
     try:
+        print("🔄 Generating initial report...")
         completion = await groq_client.chat.completions.create(
-            model="moonshotai/kimi-k2-instruct-0905",
+            model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.7,
+            temperature=0.1,  # Low temperature to reduce hallucinations
             max_completion_tokens=2048
         )
         full_report = completion.choices[0].message.content
+        print("✅ Initial report generated")
     except Exception as e:
-        print(f"Error generating report: {e}")
+        print(f"❌ Error generating report: {e}")
         full_report = "Report generation failed. Please contact support."
+
+    # 1.5 HALLUCINATION VALIDATION - Second LLM validates the report
+    validation_prompt = f"""You are an EXTREMELY strict fact-checker. Your job is to find and replace ALL fabricated details.
+
+ORIGINAL CONVERSATION EVIDENCE (this is the ONLY source of truth):
+{json.dumps(request.evidenceLog, indent=2)}
+
+SESSION SUMMARY: {request.summary}
+
+GENERATED REPORT TO CHECK:
+{full_report}
+
+STEP-BY-STEP VALIDATION:
+
+1. CHECK THE SITUATION SECTION for these common hallucinations:
+   - "one-on-one meeting" / "1:1" → Did user say this? If not → "[Meeting type not discussed]"
+   - "this week" / "next week" / "tomorrow" / any day → Did user specify when? If not → "[Timing not discussed]"
+   - "conference room" / "office" / any location → Did user specify where? If not → "[Location not discussed]"
+   - "direct report" / "team member" / any relationship → Did user specify who? If not → "[Person not discussed]"
+   - Any person's name → Did user mention this name? If not → "[Name not discussed]"
+
+2. CHECK ALL OTHER SECTIONS for:
+   - Specific meeting types (performance review, project kickoff, etc.)
+   - Specific times (2pm, morning, etc.)
+   - Specific days (Monday, Thursday, etc.)
+   - Specific locations or room names
+   - Specific relationship types not mentioned
+
+3. REPLACEMENT RULES:
+   - Replace "During your next one-on-one meeting this week" → "During your [timing not discussed] [meeting type not discussed]"
+   - Replace "In the private conference room" → "In a [location not discussed]"
+   - Replace "You and your direct report" → "You and [person not discussed]"
+   - Any specific detail NOT in the evidence must be replaced with "[X not discussed]"
+
+4. PRESERVE what IS in the evidence:
+   - If user discussed "career transition to AI and instructional design" - KEEP IT
+   - If user discussed specific choices or outcomes - KEEP THEM
+   - Only replace what was NOT actually discussed
+
+Return the COMPLETE corrected report in Markdown format with ALL hallucinations replaced."""
+
+    try:
+        print("🔄 Running hallucination validation...")
+        validation = await groq_client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": validation_prompt}],
+            temperature=0.0,  # Zero temperature for strict validation
+            max_completion_tokens=2048
+        )
+        full_report = validation.choices[0].message.content
+        print("✅ Report validated and corrected for hallucinations")
+    except Exception as e:
+        print(f"❌ Validation failed, using original report: {e}")
+        # Keep original report if validation fails
 
     # 2. Save to Database
     scores_json = json.dumps(request.dimensions)
@@ -222,6 +329,59 @@ def read_assessments(skip: int = 0, limit: int = 100, db: Session = Depends(get_
     assessments = db.query(models.Assessment).filter(models.Assessment.user_id == current_user.id).order_by(models.Assessment.timestamp.desc()).offset(skip).limit(limit).all()
     return assessments
 
+class InferInsightsRequest(schemas.BaseModel):
+    evidenceLog: list
+    dimensions: dict
+
+@app.post("/api/infer-insights")
+async def infer_insights(request: InferInsightsRequest):
+    """Use LLM to infer strengths and development priorities from evidence log"""
+    groq_client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY"))
+
+    prompt = f"""Analyze this coaching conversation evidence and identify key strengths and development priorities.
+
+EVIDENCE LOG:
+{json.dumps(request.evidenceLog, indent=2)}
+
+DIMENSION SCORES:
+{json.dumps(request.dimensions, indent=2)}
+
+Return a JSON object with exactly this structure:
+{{
+    "strengths": ["S", "C", "O", "P", "E"],  // List only dimension codes where user showed strength
+    "developmentPriorities": ["S", "C", "O", "P", "E"]  // List only dimension codes needing development
+}}
+
+Rules:
+- strengths: Include dimension codes where user showed good understanding or positive engagement (based on evidence with "positive" sentiment)
+- developmentPriorities: Include dimension codes with low scores or limited evidence
+- Use ONLY these codes: S, C, O, P, E
+- Each array should have 1-3 items max
+- Base this ONLY on the evidence provided
+
+Return ONLY the JSON object, no other text."""
+
+    try:
+        completion = await groq_client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.1,
+            max_completion_tokens=256
+        )
+
+        response_text = completion.choices[0].message.content
+        # Extract JSON from response
+        import re
+        json_match = re.search(r'\{[\s\S]*\}', response_text)
+        if json_match:
+            result = json.loads(json_match.group())
+            return result
+        else:
+            return {"strengths": [], "developmentPriorities": []}
+    except Exception as e:
+        print(f"Error inferring insights: {e}")
+        return {"strengths": [], "developmentPriorities": []}
+
 class FinalizeSessionRequest(schemas.BaseModel):
     email: str
     assessment: dict
@@ -229,9 +389,9 @@ class FinalizeSessionRequest(schemas.BaseModel):
 @app.post("/api/finalize-session")
 async def finalize_session(request: FinalizeSessionRequest, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     try:
-        print(f"Finalizing quantum story session for {request.email}")
+        print(f"Finalizing S.C.O.P.E. FeedForward session for {request.email}")
 
-        # --- Generate Living Story Synthesis using Quantum Storytelling Framework ---
+        # --- Generate Living Story Synthesis using S.C.O.P.E. FeedForward Framework ---
         groq_client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY"))
         
         # Extract narrative streams data
@@ -244,6 +404,22 @@ async def finalize_session(request: FinalizeSessionRequest, db: Session = Depend
         evidence_log = request.assessment.get('evidenceLog', [])
         strengths = request.assessment.get('strengths', [])
         development_priorities = request.assessment.get('developmentPriorities', [])
+
+        # Provide default strengths if none were identified during conversation
+        if not strengths:
+            strengths = [
+                "Willingness to engage in coaching conversation",
+                "Interest in growth-oriented feedback",
+                "Openness to structured development approach"
+            ]
+
+        # Provide default growth opportunities if none were identified
+        if not development_priorities:
+            development_priorities = [
+                "Building specificity in situation framing",
+                "Developing distinct behavioral choices",
+                "Connecting actions to deeper purpose"
+            ]
 
         # Format dimensions for prompt
         dimension_labels = {
@@ -320,175 +496,194 @@ async def finalize_session(request: FinalizeSessionRequest, db: Session = Depend
         
         # CONSTITUTIONAL AI: Validator imported at top level
 
-        # Build quantum storytelling synthesis prompt
+        # Build S.C.O.P.E. FeedForward Report synthesis prompt
         story_synthesis_prompt = f"""
-You are synthesizing a LIVING HEALTH STORY using David Boje's Quantum Storytelling framework.
-This is NOT an assessment—it's witnessing a story-in-the-making.
+You are generating a S.C.O.P.E. FEEDFORWARD REPORT based on Danny Simms' S.C.O.P.E. FeedForward Model™ (7020TEN).
 
-⚠️ CONSTITUTIONAL GUARDRAILS (Yama Principles):
-1. Ahimsa: Never force a story the user isn't ready to tell
-2. Satya: Honor contradictions without resolution
-3. Asteya: The story belongs to the user
-4. Brahmacharya: Match depth to user's capacity  
-5. Aparigraha: Share patterns without claiming ownership
+This is a FUTURE-FOCUSED coaching report that prepares a manager to have a growth-oriented feedforward conversation.
+
+## S.C.O.P.E. Framework
+- **S**ituation - A specific upcoming moment (future-oriented, not past)
+- **C**hoices - Two behavioral options (genuinely neutral, not loaded)
+- **O**utcomes - Immediate results of each choice (observable, not long-term)
+- **P**urpose - The deeper meaning/growth opportunity (inspiring, not punitive)
+- **E**ngagement - How to invite collaboration (open-ended, not directive)
+
+## Constitutional AI Guardrails (Yama Principles)
+1. **Ahimsa (Non-harm)**: No judgmental language; describe behavior, not character
+2. **Satya (Truthfulness)**: Realistic outcomes; mark confidence levels
+3. **Asteya (Non-stealing)**: Credit Danny Simms; respect autonomy
+4. **Brahmacharya (Right energy)**: Focus effort on weaker components
+5. **Aparigraha (Non-attachment)**: Choices belong to the coachee; no "right" answer
 
 ## Session Data
 
-**User**: {request.email}
-**Story Phase**: {phase}
+**Manager**: {request.email}
+**Session Date**: {phase}
 
-**Metabolic Health Readiness Scores**:
-{chr(10).join(dimension_summaries) if dimension_summaries else "No dimension scores yet"}
+**S.C.O.P.E. Component Scores**:
+{chr(10).join(dimension_summaries) if dimension_summaries else "Components being developed"}
 
-**Evidence Collected**:
-{chr(10).join(evidence_summaries) if evidence_summaries else "No evidence collected yet"}
+**Evidence from Conversation**:
+{chr(10).join(evidence_summaries) if evidence_summaries else "Conversation evidence"}
 
-**Strengths Identified**: {', '.join(strengths) if strengths else 'None identified yet'}
-**Development Priorities**: {', '.join(development_priorities) if development_priorities else 'None identified yet'}
+**Strengths**: {', '.join(strengths) if strengths else 'Identified during session'}
+**Growth Opportunities**: {', '.join(development_priorities) if development_priorities else 'Identified during session'}
 
-**Narrative Streams**:
-{chr(10).join(stream_summaries) if stream_summaries else "No narrative streams captured yet"}
+**Conversation Fragments**:
+{json.dumps(fragments[:10], indent=2) if fragments else "Session fragments"}
 
-**Antenarrative Fragments** (user's actual story bits):
-{json.dumps(fragments[:10], indent=2) if fragments else "No fragments captured yet"}
-
-**Overall Session**:
-- Total Fragments: {len(fragments)}
+**Session Summary**:
 - Turn Count: {request.assessment.get('turnCount', 0)}
 - Summary: {request.assessment.get('summary', '')}
 
-## Synthesis Guidelines (Critical - Read Carefully)
+## Report Generation Guidelines
 
-### 1. HONOR ANTENARRATIVES (Don't Force Coherence)
-- Quote the user's EXACT speculative fragments
-- Preserve tensions and contradictions—do NOT resolve them
-- List multiple possible story endings (don't choose one)
-- Use language like "You said..." or "In your words..."
+### 1. EXTRACT S.C.O.P.E. COMPONENTS
+From the conversation, identify and structure:
+- **Situation**: A brief 1-2 sentence description of the coaching scenario based ONLY on conversation evidence. Do NOT invent specific times (Monday, Friday, 10am), locations (office, conference room), or relationship terms (direct report, line manager) - keep it general.
+- **Choices**: Two genuine behavioral options with no implied "right" answer
+- **Outcomes**: Immediate observable results for each choice
+- **Purpose**: Growth opportunity and connection to values/goals
+- **Engagement**: Invitation language that builds psychological safety
 
-### 2. EMBRACE QUANTUM SUPERPOSITION
-Present multiple simultaneous truths from quantum states:
-- Example: "You are BOTH 60% Empowered Tracker AND 30% Anxious Monitor AND 10% Compliant Patient"
-- Visualize probability distributions with styled percentage badges
-- Show which states conflict and which reinforce each other
-- NEVER force a single identity—honor the multiplicity
+### CRITICAL ANTI-HALLUCINATION RULES
+- ONLY use information from the Evidence/Fragments above
+- NEVER invent:
+  * Days/times (Monday, Friday, 10am, tomorrow)
+  * Locations (conference room, office, virtual meeting)
+  * Relationships (direct report, line manager, team member) unless explicitly stated
+  * People's names
+  * Meeting types (1:1, performance review)
+- Use generic phrases: "When you have this conversation...", "The person you're coaching..."
 
-### 3. MAP TEMPORAL ENTANGLEMENT
-Create a three-column temporal collapse view:
-- **LEFT COLUMN (Past)**: Health stories user references from their history
-- **CENTER COLUMN (Present)**: Current lived health experiences  
-- **RIGHT COLUMN (Future)**: Imagined health trajectories user is authoring
+### 2. SCORE EACH COMPONENT (0-100)
+Rate each component on its quality criteria:
+- Situation: Specificity, future-orientation, observability
+- Choices: Behavioral clarity, genuine neutrality, within control
+- Outcomes: Immediacy, observability, causality link
+- Purpose: Meaningfulness, growth-orientation, personal relevance
+- Engagement: Open-endedness, safety-building, collaboration
 
-Use visual metaphors like "Then → Now → Becoming" or "Memory ⟷ Moment ⟷ Possibility"
+### 3. GENERATE DUAL SCRIPTS
+Create both versions for the manager:
+- **Formal Script**: Complete word-for-word structured conversation
+- **Conversational Script**: Natural flowing dialogue version
 
-### 4. SURFACE GRAND NARRATIVES
-Identify cultural/development discourses the user negotiates with:
-- Development Authority: Is user [accepting/resisting/negotiating/transforming]?
-- Quantified Self Movement: What's their stance?
-- Genetic Determinism: How does family history shape their story?
-- Wellness Industry: Do they buy in, push back, or selectively engage?
+### 4. INFER STRENGTHS AND OPPORTUNITIES
+Even from brief conversations, identify:
+- **Strengths**: What the manager already does well (e.g., "clear situation framing", "genuine care for growth")
+- **Growth Opportunities**: Where the conversation could be stronger (e.g., "making choices more distinct", "connecting to deeper purpose")
 
-Display as styled badges showing discourse + stance
+ALWAYS infer at least 2-3 strengths and 2-3 opportunities from any interaction length.
 
-### 5. OFFER STORY PATHS (Not Prescriptions)
-Present 3 possible futures as story continuations (not recommendations):
-
-**Path A: [Evocative Name]**
-"If you continue this thread... [scenario that honors their current fragments]"
-
-**Path B: [Evocative Name]**  
-"If you explore this tension... [alternative possibility from contradictions]"
-
-**Path C: [Evocative Name]**
-"If you transform this pattern... [emergent potential from quantum states]"
-
-**CRITICAL**: Frame as "possible chapters," NOT "you should." The story belongs to the user.
-
-### 6. CONSTITUTIONAL AI: Yama Storytelling Ethics
-- **Ahimsa**: Never force a story the user isn't ready to tell
-- **Satya**: Honor contradictions—don't resolve them falsely  
-- **Asteya**: The story belongs to the user, not the system
-- **Brahmacharya**: Match narrative depth to user's emotional capacity
-- **Aparigraha**: Share story patterns without claiming ownership
-
-If user shows resistance or tension, ACKNOWLEDGE IT, don't fix it.
+### 5. PREPARATION CHECKLIST
+Include actionable steps for before, during, and after the conversation.
 
 ## Output Format Requirements
 
-Generate HTML with **organic, fractal visual language** (NOT rigid developmental tables).
+Generate clean, professional HTML for the S.C.O.P.E. FeedForward Report.
 
 **Visual Style Guide**:
-- Use flowing, rounded containers (border-radius: 16px+)
-- Gradient backgrounds for quantum state bubbles
-- Soft shadows for depth (box-shadow with 20%+ opacity)
-- Color palette: Deep purples (#4f46e5), teals (#06b6d4), ambers (#f59e0b)
-- Typography: Use em units, generous line-height (1.6+)
-- Quantum state probabilities as animated progress circles or bubbles
-- Temporal entanglement as 3-column grid with connecting lines/dots
-- **CRITICAL**: NEVER use white (#fff, #ffffff, white) or near-white text colors. All text must be dark and readable on white/light backgrounds. Use #0f172a for headers, #334155 for body text, #64748b for muted text.
+- Professional, clean design (not overly decorative)
+- Color palette: Indigo (#4f46e5) for primary, Emerald (#059669) for success, Amber (#d97706) for growth opportunities
+- Typography: System fonts, generous line-height (1.6+)
+- Component cards with quality scores
+- Script sections clearly formatted for easy reading
+- **CRITICAL**: All text must be dark and readable. Use #0f172a for headers, #334155 for body text, #64748b for muted text.
 
 **Structure**:
 <div style="font-family: system-ui; max-width: 800px; margin: 0 auto; padding: 2rem;">
-  <h1 style="color: #4f46e5; font-size: 2em; margin-bottom: 0.5em;">Your Living Health Story</h1>
-  <p style="color: #64748b; font-style: italic; margin-bottom: 2em;">A quantum narrative synthesis · Story phase: {phase}</p>
-  
+  <h1 style="color: #4f46e5; font-size: 2em; margin-bottom: 0.5em;">S.C.O.P.E. FeedForward Report</h1>
+  <p style="color: #64748b; font-style: italic; margin-bottom: 2em;">Future-Focused Coaching Conversation · Based on Danny Simms' S.C.O.P.E. FeedForward Model™</p>
+
   <section style="margin-bottom: 3em;">
-    <h2 style="color: #0f172a; border-left: 4px solid #4f46e5; padding-left: 1em;">Story-in-the-Making</h2>
-    <p style="line-height: 1.7; color: #334155;">[Synthesis of what emerged, honoring multiplicity]</p>
-  </section>
-  
-  <section style="margin-bottom: 3em;">
-    <h2 style="color: #0f172a; border-left: 4px solid #06b6d4; padding-left: 1em;">Quantum Superposition: Your Simultaneous Truths</h2>
-    [Quantum state bubbles with probabilities]
-  </section>
-  
-  <section style="margin-bottom: 3em;">
-    <h2 style="color: #0f172a; border-left: 4px solid #f59e0b; padding-left: 1em;">Temporal Entanglement</h2>
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5em;">
-      <div><h3>Then (Past)</h3>[past stories]</div>
-      <div><h3>Now (Present)</h3>[present moments]</div>
-      <div><h3>Becoming (Future)</h3>[future imaginaries]</div>
+    <h2 style="color: #0f172a; border-left: 4px solid #4f46e5; padding-left: 1em;">📋 Conversation Overview</h2>
+    <p style="line-height: 1.7; color: #334155;">[One-sentence summary of the feedforward conversation being designed]</p>
+    <div style="margin-top: 1em; padding: 1em; background: #f1f5f9; border-radius: 8px;">
+      <strong>Overall Readiness:</strong> [Score]/100
     </div>
   </section>
-  
+
   <section style="margin-bottom: 3em;">
-    <h2 style="color: #0f172a; border-left: 4px solid #8b5cf6; padding-left: 1em;">Grand Narratives You're Navigating</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 0.75em; margin-top: 1em;">
-      <!-- Each badge should use this format: -->
-      <span style="display: inline-block; padding: 0.5em 1em; background: #f3e8ff; border-radius: 8px; color: #334155; font-size: 0.9em; margin-bottom: 0.5em;">
-        <strong style="color: #8b5cf6;">[Narrative Name]:</strong> [Stance]
-      </span>
-      <!-- Example: <span style="..."><strong>Development Authority:</strong> Negotiating</span> -->
+    <h2 style="color: #0f172a; border-left: 4px solid #06b6d4; padding-left: 1em;">🎯 S - Situation</h2>
+    <div style="padding: 1em; background: #f0f9ff; border-radius: 8px; margin-bottom: 1em;">
+      <strong>Quality Score:</strong> [Score]/100
+    </div>
+    <p style="line-height: 1.7; color: #334155;">[Brief 1-2 sentence description of the coaching scenario from the conversation. No specific times, locations, or relationship terms unless explicitly discussed.]</p>
+  </section>
+
+  <section style="margin-bottom: 3em;">
+    <h2 style="color: #0f172a; border-left: 4px solid #8b5cf6; padding-left: 1em;">🔀 C - Choices</h2>
+    <div style="padding: 1em; background: #faf5ff; border-radius: 8px; margin-bottom: 1em;">
+      <strong>Quality Score:</strong> [Score]/100
+    </div>
+    <div style="display: grid; gap: 1em;">
+      <div style="padding: 1em; border: 2px solid #e0e7ff; border-radius: 8px;">
+        <strong>Choice A:</strong> [Behavioral option 1]
+      </div>
+      <div style="padding: 1em; border: 2px solid #e0e7ff; border-radius: 8px;">
+        <strong>Choice B:</strong> [Behavioral option 2]
+      </div>
     </div>
   </section>
-  
+
   <section style="margin-bottom: 3em;">
-    <h2 style="color: #0f172a; border-left: 4px solid #10b981; padding-left: 1em;">Three Possible Story Paths</h2>
-    [Path A, B, C as cards with evocative names]
-  </section>
-  
-  <section style="margin-bottom: 3em;">
-    <h2 style="color: #0f172a; border-left: 4px solid #ec4899; padding-left: 1em;">Story Qualities</h2>
-    <div style="display: flex; gap: 2em;">
-      <div>
-        <div style="font-size: 2em; color: #4f46e5;">[coherence]%</div>
-        <div style="color: #64748b;">Coherence</div>
-      </div>
-      <div>
-        <div style="font-size: 2em; color: #06b6d4;">[fluidity]%</div>
-        <div style="color: #64748b;">Fluidity</div>
-      </div>
-      <div>
-        <div style="font-size: 2em; color: #f59e0b;">[authenticity]%</div>
-        <div style="color: #64748b;">Authenticity</div>
-      </div>
+    <h2 style="color: #0f172a; border-left: 4px solid #10b981; padding-left: 1em;">📈 O - Outcomes</h2>
+    <div style="padding: 1em; background: #f0fdf4; border-radius: 8px; margin-bottom: 1em;">
+      <strong>Quality Score:</strong> [Score]/100
     </div>
+    <p><strong>If Choice A →</strong> [Immediate observable result]</p>
+    <p><strong>If Choice B →</strong> [Immediate observable result]</p>
+  </section>
+
+  <section style="margin-bottom: 3em;">
+    <h2 style="color: #0f172a; border-left: 4px solid #f59e0b; padding-left: 1em;">💡 P - Purpose</h2>
+    <div style="padding: 1em; background: #fffbeb; border-radius: 8px; margin-bottom: 1em;">
+      <strong>Quality Score:</strong> [Score]/100
+    </div>
+    <blockquote style="border-left: 3px solid #f59e0b; padding-left: 1em; margin: 1em 0; font-style: italic;">
+      [The deeper meaning and growth opportunity]
+    </blockquote>
+  </section>
+
+  <section style="margin-bottom: 3em;">
+    <h2 style="color: #0f172a; border-left: 4px solid #ec4899; padding-left: 1em;">🤝 E - Engagement</h2>
+    <div style="padding: 1em; background: #fdf2f8; border-radius: 8px; margin-bottom: 1em;">
+      <strong>Quality Score:</strong> [Score]/100
+    </div>
+    <p><strong>Invitation:</strong> "[Open-ended question to invite collaboration]"</p>
+  </section>
+
+  <section style="margin-bottom: 3em;">
+    <h2 style="color: #0f172a; border-left: 4px solid #4f46e5; padding-left: 1em;">📝 Conversation Scripts</h2>
+    <h3 style="color: #334155;">Formal Script</h3>
+    <div style="padding: 1.5em; background: #f8fafc; border-radius: 8px; font-family: Georgia, serif; line-height: 1.8;">
+      [Complete word-for-word script following S.C.O.P.E. sequence]
+    </div>
+    <h3 style="color: #334155; margin-top: 1.5em;">Conversational Script</h3>
+    <div style="padding: 1.5em; background: #f8fafc; border-radius: 8px; font-family: Georgia, serif; line-height: 1.8;">
+      [Natural flowing version of the same conversation]
+    </div>
+  </section>
+
+  <section style="margin-bottom: 3em;">
+    <h2 style="color: #0f172a; border-left: 4px solid #059669; padding-left: 1em;">✨ Strengths</h2>
+    <ul style="color: #334155;">[List 2-3 things the manager does well in this conversation design]</ul>
+  </section>
+
+  <section style="margin-bottom: 3em;">
+    <h2 style="color: #0f172a; border-left: 4px solid #d97706; padding-left: 1em;">🌱 Growth Opportunities</h2>
+    <ul style="color: #334155;">[List 2-3 ways to strengthen the conversation]</ul>
   </section>
 </div>
 
-**Tone**: Read as WITNESSING, not DIAGNOSING. Use present progressive tense ("you are becoming," "the story is emerging").
-**Language**: Poetic yet precise. Fractal/organic metaphors (roots, rivers, constellations), NOT developmental/corporate jargon.
+**Tone**: Professional, supportive, growth-oriented. Use future tense ("you will," "they can").
+**Language**: Clear, actionable, coaching-focused. NO medical, diagnostic, or quantum jargon.
 
 IMPORTANT: DO NOT include footer, copyright, or "© 2024" text. System adds official footer automatically.
+
+CRITICAL: ALWAYS populate the Strengths and Growth Opportunities sections with specific, inferred insights even from brief conversations. Never leave them empty.
 """
 
         completion = await groq_client.chat.completions.create(
@@ -522,17 +717,17 @@ IMPORTANT: DO NOT include footer, copyright, or "© 2024" text. System adds offi
         
         # Attach Constitutional AI footer to report
         constitutional_footer = f"""
-        <div style="margin-top: 40px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+        <div style="margin-top: 40px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                     border-radius: 8px; color: white; font-size: 11px;">
-            <div style="font-weight: bold; font-size: 14px; margin-bottom: 10px;">🛡️ Constitutional AI Validation</div>
+            <div style="font-weight: bold; font-size: 14px; margin-bottom: 10px;">🛡️ S.C.O.P.E. FeedForward Model™ by Danny Simms</div>
             <div style="opacity: 0.9;">
                 <strong>Receipt ID:</strong> {validation_receipt['receipt_id']}<br>
                 <strong>Status:</strong> {validation_receipt['validation_result']}<br>
-                <strong>Yama Principles:</strong> {len(validation_receipt['harmonies'])} in harmony, {len(validation_receipt['violations'])} requiring attention<br>
+                <strong>Coaching Ethics:</strong> {len(validation_receipt['harmonies'])} in harmony, {len(validation_receipt['violations'])} requiring attention<br>
                 <strong>Validation Time:</strong> {validation_receipt['timestamp']}<br>
             </div>
             <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.3); font-size: 10px; opacity: 0.7;">
-                This narrative synthesis was validated against Constitutional AI principles: Ahimsa (non-harm), 
+                This coaching conversation was validated against Constitutional AI coaching ethics: Ahimsa (non-harm),
                 Satya (truthfulness), Asteya (non-stealing), Brahmacharya (right energy), Aparigraha (non-attachment)
             </div>
         </div>
@@ -541,7 +736,7 @@ IMPORTANT: DO NOT include footer, copyright, or "© 2024" text. System adds offi
         
         # Inject into assessment data
         request.assessment['ai_report_html'] = ai_report_html
-        request.assessment['story_synthesis_mode'] = 'quantum'
+        request.assessment['story_synthesis_mode'] = 'scope_feedforward'
         request.assessment['constitutional_receipt_id'] = validation_receipt['receipt_id']
 
         # ===================================================================
@@ -570,14 +765,14 @@ IMPORTANT: DO NOT include footer, copyright, or "© 2024" text. System adds offi
                 'fragments_count': len(fragments),
                 'turn_count': request.assessment.get('turnCount', 0),
                 'coherence': calculate_coherence(fragments),
-                'fluidity': calculate_fluidity(request.assessment.get('quantumStates', [])),
+                'fluidity': calculate_fluidity(request.assessment.get('scopeStates', [])),
                 'authenticity': calculate_authenticity(request.assessment.get('yamaResonances', []))
             },
             mode=mode,
             fragments=fragments,
             session_data={
                 'narrative_streams': narrative_streams,
-                'quantum_states': request.assessment.get('quantumStates', []),
+                'scope_states': request.assessment.get('scopeStates', []),
                 'yama_resonances': request.assessment.get('yamaResonances', []),
                 'summary': request.assessment.get('summary', '')
             }
@@ -678,7 +873,7 @@ async def submit_review_decision(
         # Reconstruct assessment data for email delivery
         assessment_data = {
             'ai_report_html': updated_review.report_html,
-            'story_synthesis_mode': 'quantum',
+            'story_synthesis_mode': 'scope_feedforward',
             'constitutional_receipt_id': updated_review.groq_synthesis_metadata.get('constitutional_receipt_id', ''),
             'summary': updated_review.groq_synthesis_metadata.get('summary', '')
         }

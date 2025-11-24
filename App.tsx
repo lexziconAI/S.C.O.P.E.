@@ -2,13 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { LiveVoiceCoach } from './components/LiveVoiceCoach';
 import Login from './components/Login';
 import Register from './components/Register';
-import { Globe, Mic, Info, LogOut } from 'lucide-react';
+import { ModeSelector, CoachMode } from './components/ModeSelector';
+import { ScopeCoachSequential } from './components/ScopeCoachSequential';
+import { ScopeCoachNatural } from './components/ScopeCoachNatural';
+import { Globe, Mic, Info, LogOut, ArrowLeft } from 'lucide-react';
 import { getApiUrl } from './src/config';
 
 const App: React.FC = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [view, setView] = useState<'login' | 'register' | 'app'>('login');
+  const [selectedMode, setSelectedMode] = useState<CoachMode | null>(null);
+
+  const handleModeSelect = (mode: CoachMode) => {
+    setSelectedMode(mode);
+  };
+
+  const handleBackToModeSelect = () => {
+    setSelectedMode(null);
+  };
+
+  const handleCoachComplete = (result: any) => {
+    console.log('Coach completed:', result);
+    // Reset to mode selection after completion
+    setSelectedMode(null);
+  };
 
   useEffect(() => {
     // Validate token on startup
@@ -85,9 +103,10 @@ const App: React.FC = () => {
           <div className="absolute top-4 right-4 max-w-sm bg-white p-6 rounded-xl shadow-xl border border-slate-100 z-20 animate-fade-in-down">
             <h3 className="font-semibold text-lg mb-2">About S.C.O.P.E. Coach</h3>
             <p className="text-slate-600 text-sm mb-4 leading-relaxed">
-              This is an Axiom Intelligence Powered Experience – Interactive Oral Assessments as a Service (IOAaaS)
-              brought to you by the Axiom Intelligence API. S.C.O.P.E. Coach assesses your readiness for AI-assisted
-              early disease detection tools through natural voice conversations.
+              S.C.O.P.E. Coach implements the S.C.O.P.E. FeedForward Model™ by Danny Simms (7020TEN) –
+              a growth-oriented framework for developmental performance conversations. This Axiom Intelligence
+              Powered Experience guides managers through designing high-quality feedforward conversations
+              using natural voice interaction.
             </p>
             <button 
               onClick={() => setShowInfo(false)}
@@ -99,22 +118,40 @@ const App: React.FC = () => {
         )}
 
         <div className="w-full max-w-4xl mx-auto flex flex-col items-center gap-8">
-          {view === 'app' && (
+          {view === 'app' && !selectedMode && (
             <>
-              <div className="text-center space-y-2 max-w-2xl">
+              <div className="text-center space-y-2 max-w-2xl mb-8">
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-                  S.C.O.P.E. Coach FeedForward Assessment
+                  S.C.O.P.E. Coach FeedForward
                 </h2>
                 <p className="text-slate-500 text-lg">
-                  Start a real-time voice conversation to assess your personal development readiness with AI-powered coaching.
+                  Design high-quality feedforward conversations using the S.C.O.P.E. model by Danny Simms.
                 </p>
               </div>
 
-              {/* The Core Voice Component */}
+              {/* Mode Selection */}
               <div className="w-full">
-                <LiveVoiceCoach token={token!} />
+                <ModeSelector selectedMode={selectedMode} onModeSelect={handleModeSelect} />
               </div>
             </>
+          )}
+
+          {view === 'app' && selectedMode && (
+            <div className="w-full">
+              <button
+                onClick={handleBackToModeSelect}
+                className="mb-4 flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to mode selection
+              </button>
+              <div className="text-center mb-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+                  {selectedMode === 'sequential' ? 'Sequential Mode' : 'Natural Mode'}
+                </span>
+              </div>
+              <LiveVoiceCoach token={token!} coachMode={selectedMode} />
+            </div>
           )}
 
           {view === 'login' && (

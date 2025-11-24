@@ -5,6 +5,11 @@ import AudioVisualizer from './AudioVisualizer';
 import { ConnectionState, SessionState, INITIAL_SESSION_STATE } from '../types';
 import { LiveTracker, FinalReport } from './AssessmentDashboard';
 import { getWebSocketUrl, getApiUrl } from '../src/config';
+import { SCOPE_SEQUENTIAL_PROMPT } from '../lib/system-prompts/scope-sequential-prompt';
+import { SCOPE_NATURAL_PROMPT } from '../lib/system-prompts/scope-natural-prompt';
+
+// Coach mode type
+type CoachMode = 'sequential' | 'natural';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PHASE 1: ADD SPECTRAL ANALYSIS UTILITIES
@@ -508,7 +513,7 @@ const updateAssessmentStateTool = {
   }
 };
 
-const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
+const LiveVoiceCoach: React.FC<{ token: string; coachMode?: CoachMode }> = ({ token, coachMode }) => {
   const [connectionState, setConnectionState] = useState<ConnectionState>(ConnectionState.OSCONNECTED);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(false);
@@ -748,12 +753,22 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
         console.log('OpenAI Realtime Session Opened');
         setConnectionState(ConnectionState.CONNECTED);
 
-        // Initialize Session with appropriate prompt based on user type
-        const selectedPrompt = userType === 'expert' ? EXPERT_PROMPT :
-                               userType === 'general' ? GENERAL_PUBLIC_PROMPT :
-                               QUANTUM_STORYTELLING_PROMPT;
+        // Initialize Session with appropriate prompt based on coach mode or user type
+        let selectedPrompt: string;
 
-        console.log(`🎯 Starting session with user type: ${userType}`);
+        if (coachMode === 'sequential') {
+          selectedPrompt = SCOPE_SEQUENTIAL_PROMPT;
+          console.log(`🎯 Starting session with S.C.O.P.E. Sequential Mode`);
+        } else if (coachMode === 'natural') {
+          selectedPrompt = SCOPE_NATURAL_PROMPT;
+          console.log(`🎯 Starting session with S.C.O.P.E. Natural Mode`);
+        } else {
+          // Fall back to legacy user type selection
+          selectedPrompt = userType === 'expert' ? EXPERT_PROMPT :
+                           userType === 'general' ? GENERAL_PUBLIC_PROMPT :
+                           QUANTUM_STORYTELLING_PROMPT;
+          console.log(`🎯 Starting session with user type: ${userType}`);
+        }
 
         const sessionUpdate = {
             type: "session.update",
@@ -1246,6 +1261,33 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
 
         const result = await response.json();
         console.log("Session finalized:", result);
+
+        // Infer strengths and priorities from evidence log
+        try {
+            const insightsResponse = await fetch(getApiUrl('/api/infer-insights'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    evidenceLog: sessionState.evidenceLog,
+                    dimensions: sessionState.dimensions
+                })
+            });
+
+            if (insightsResponse.ok) {
+                const insights = await insightsResponse.json();
+                console.log("Inferred insights:", insights);
+                setSessionState(prev => ({
+                    ...prev,
+                    strengths: insights.strengths || [],
+                    developmentPriorities: insights.developmentPriorities || []
+                }));
+            }
+        } catch (insightError) {
+            console.error("Error inferring insights:", insightError);
+        }
 
         setShowEmailModal(false);
         disconnect();
