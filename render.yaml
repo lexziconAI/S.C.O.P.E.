@@ -29,7 +29,6 @@ services:
   - type: web
     runtime: static
     name: scope-coach-frontend
-    region: oregon
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     envVars:
