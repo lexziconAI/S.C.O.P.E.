@@ -25,9 +25,9 @@ services:
         sync: false
     autoDeploy: true
 
+staticSites:
   # Frontend - Static Site (FREE)
-  - type: static
-    name: scope-coach-frontend
+  - name: scope-coach-frontend
     buildCommand: npm install && npm run build
     publishDir: dist
     envVars:
