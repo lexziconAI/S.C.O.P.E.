@@ -46,7 +46,7 @@ class ReportReview(Base):
     # De-identified context for reviewer (NO PII)
     user_journey_summary = Column(Text)
     key_themes = Column(JSON)
-    mode = Column(String)  # preventive, medical
+    mode = Column(String)  # preventive, development
     
     # Review workflow
     status = Column(String, default=ReviewStatus.PENDING.value)
@@ -170,7 +170,7 @@ class ReviewQueueManager:
         """Generate de-identified summary for reviewer (no PII)"""
         mode_desc = {
             JourneyMode.EEVENTIVE: 'exploring personal development prevention',
-            JourneyMode.MEDICAL: 'managing diabetes with medication'
+            JourneyMode.MEDICAL: 'managing development goal with medication'
         }
         
         turn_count = session_data.get('turn_count', 0)
@@ -184,7 +184,7 @@ class ReviewQueueManager:
         theme_keywords = {
             'medication adherence': ['insulin', 'metformin', 'medication', 'dose', 'prescription', 'pill'],
             'lifestyle change': ['exercise', 'diet', 'sleep', 'stress', 'habit', 'routine'],
-            'clinical monitoring': ['blood sugar', 'glucose', 'A1C', 'test', 'doctor', 'lab'],
+            'developmental monitoring': ['blood sugar', 'glucose', 'A1C', 'test', 'doctor', 'lab'],
             'technology use': ['app', 'wearable', 'tracker', 'device', 'monitor', 'phone'],
             'emotional wellbeing': ['anxious', 'worried', 'frustrated', 'overwhelmed', 'hopeful', 'scared']
         }

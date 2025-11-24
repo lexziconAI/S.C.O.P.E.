@@ -57,10 +57,10 @@ class Ahimsa(YamaPrinciple):
     def validate(self, content: str, context: Dict = None) -> Tuple[bool, str]:
         content_lower = content.lower()
         
-        # Check for medical harm
+        # Check for development harm
         for indicator in self.harm_indicators:
             if indicator in content_lower:
-                return False, f"AHIMSA VIOLATION: Content suggests potentially harmful medical advice: '{indicator}'"
+                return False, f"AHIMSA VIOLATION: Content suggests potentially harmful coaching guidance: '{indicator}'"
         
         # Check for psychological forcing
         for pattern in self.forcing_patterns:
@@ -151,14 +151,14 @@ class Brahmacharya(YamaPrinciple):
     def __init__(self):
         super().__init__(
             "Brahmacharya",
-            "Discipline: Stay within scope, defer medical decisions"
+            "Discipline: Stay within scope, defer development decisions"
         )
         
         # Scope violations
         self.overreach_patterns = [
             'diagnose yourself', 'you have', 'you definitely',
-            'symptoms indicate', 'medical diagnosis', 'prescribe',
-            'instead of doctor', 'don\'t need medical'
+            'symptoms indicate', 'development diagnosis', 'prescribe',
+            'instead of doctor', 'don\'t need development'
         ]
         
         # Intensity without capacity

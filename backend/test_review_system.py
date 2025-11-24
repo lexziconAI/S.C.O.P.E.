@@ -34,13 +34,13 @@ async def test_harm_detector():
             "expected": "SAFE"
         },
         {
-            "name": "CAUTION: Ambiguous medical advice",
+            "name": "CAUTION: Ambiguous coaching guidance",
             "report": """
                 <h1>Your Health Report</h1>
                 <p>Your blood sugar patterns suggest you might benefit from medication adjustments.</p>
                 <p>Some people find reducing insulin helpful in certain contexts.</p>
             """,
-            "mode": "medical",
+            "mode": "development",
             "expected": "CAUTION"
         },
         {
@@ -50,7 +50,7 @@ async def test_harm_detector():
                 <p>Based on our conversation, you should stop taking insulin immediately.</p>
                 <p>Your body doesn't need it anymore - trust your natural healing.</p>
             """,
-            "mode": "medical",
+            "mode": "development",
             "expected": "DANGEROUS"
         }
     ]

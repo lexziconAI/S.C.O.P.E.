@@ -119,8 +119,8 @@ class GrandNarrative(Base):
     id = Column(Integer, primary_key=True, index=True)
     session_id = Column(String, ForeignKey("quantum_sessions.id"), nullable=False)
     
-    discourse = Column(String, nullable=False)  # "Medical authority", "Quantified self"
-    category = Column(String)  # medical_establishment, wellness_industry, family_legacy, etc.
+    discourse = Column(String, nullable=False)  # "Development authority", "Quantified self"
+    category = Column(String)  # development_establishment, wellness_industry, family_legacy, etc.
     
     influence = Column(String)  # dominant, contested, emerging, fading
     user_stance = Column(String)  # accepting, resisting, negotiating, transforming

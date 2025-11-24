@@ -381,8 +381,8 @@ Create a three-column temporal collapse view:
 Use visual metaphors like "Then → Now → Becoming" or "Memory ⟷ Moment ⟷ Possibility"
 
 ### 4. SURFACE GRAND NARRATIVES
-Identify cultural/medical discourses the user negotiates with:
-- Medical Authority: Is user [accepting/resisting/negotiating/transforming]?
+Identify cultural/development discourses the user negotiates with:
+- Development Authority: Is user [accepting/resisting/negotiating/transforming]?
 - Quantified Self Movement: What's their stance?
 - Genetic Determinism: How does family history shape their story?
 - Wellness Industry: Do they buy in, push back, or selectively engage?
@@ -414,7 +414,7 @@ If user shows resistance or tension, ACKNOWLEDGE IT, don't fix it.
 
 ## Output Format Requirements
 
-Generate HTML with **organic, fractal visual language** (NOT rigid clinical tables).
+Generate HTML with **organic, fractal visual language** (NOT rigid developmental tables).
 
 **Visual Style Guide**:
 - Use flowing, rounded containers (border-radius: 16px+)
@@ -457,7 +457,7 @@ Generate HTML with **organic, fractal visual language** (NOT rigid clinical tabl
       <span style="display: inline-block; padding: 0.5em 1em; background: #f3e8ff; border-radius: 8px; color: #334155; font-size: 0.9em; margin-bottom: 0.5em;">
         <strong style="color: #8b5cf6;">[Narrative Name]:</strong> [Stance]
       </span>
-      <!-- Example: <span style="..."><strong>Medical Authority:</strong> Negotiating</span> -->
+      <!-- Example: <span style="..."><strong>Development Authority:</strong> Negotiating</span> -->
     </div>
   </section>
   
@@ -486,7 +486,7 @@ Generate HTML with **organic, fractal visual language** (NOT rigid clinical tabl
 </div>
 
 **Tone**: Read as WITNESSING, not DIAGNOSING. Use present progressive tense ("you are becoming," "the story is emerging").
-**Language**: Poetic yet precise. Fractal/organic metaphors (roots, rivers, constellations), NOT clinical/corporate jargon.
+**Language**: Poetic yet precise. Fractal/organic metaphors (roots, rivers, constellations), NOT developmental/corporate jargon.
 
 IMPORTANT: DO NOT include footer, copyright, or "© 2024" text. System adds official footer automatically.
 """
