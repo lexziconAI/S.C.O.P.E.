@@ -1,0 +1,19 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+passlib[argon2]
+python-jose[cryptography]
+python-multipart
+websockets
+requests
+groq
+python-dotenv
+sendgrid
+# ===================================================================
+# CRITICAL: Missing dependencies that were causing silent crashes
+# ===================================================================
+anthropic
+beautifulsoup4
+waitress
+a2wsgi
