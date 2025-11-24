@@ -1,5 +1,5 @@
 /**
- * MetaGuardian: Quantum Storytelling Data Model
+ * S.C.O.P.E. Coach: Quantum Storytelling Data Model
  * Based on David Boje's framework - antenarratives, quantum superposition, living stories
  * 
  * PARADIGM SHIFT: From static dimension scores to living narrative streams

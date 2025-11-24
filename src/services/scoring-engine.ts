@@ -1,5 +1,5 @@
 /**
- * MetaGuardian Scoring Engine
+ * S.C.O.P.E. Coach Scoring Engine
  * PLACEHOLDER - Core scoring logic to be implemented
  */
 

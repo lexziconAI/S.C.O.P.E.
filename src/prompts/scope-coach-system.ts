@@ -1,5 +1,5 @@
 /**
- * MetaGuardian System Prompt
+ * S.C.O.P.E. Coach System Prompt
  * 
  * PLACEHOLDER - TO BE IMPLEMENTED
  * 
@@ -9,9 +9,9 @@
  */
 
 export const METAGUARDIAN_SYSTEM_PROMPT = `
-[PLACEHOLDER: MetaGuardian System Prompt]
+[PLACEHOLDER: S.C.O.P.E. Coach System Prompt]
 
-You are "MetaGuardian", a Constitutional AI health assessment coach focused on 
+You are "S.C.O.P.E. Coach", a Constitutional AI health assessment coach focused on 
 metabolic health and chronic disease prevention.
 
 ## CORE MISSION

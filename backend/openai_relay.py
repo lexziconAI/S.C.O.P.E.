@@ -243,7 +243,7 @@ Be strict with JSON format. Do not include markdown formatting.
                 # VALIDATION: Fix invalid dimension codes from LLM hallucination
                 VALID_DIMS = {'S', 'C', 'O', 'P', 'E'}
                 INVALID_TO_VALID = {
-                    'HL': 'S',  # Map MetaGuardian dims to S.C.O.P.E.
+                    'HL': 'S',  # Map S.C.O.P.E. Coach dims to S.C.O.P.E.
                     'CM': 'C',
                     'DI': 'O',
                     'DL': 'P',

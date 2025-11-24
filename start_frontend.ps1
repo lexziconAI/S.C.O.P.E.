@@ -1,7 +1,7 @@
-# MetaGuardian Frontend Startup Script
+# S.C.O.P.E. Coach Frontend Startup Script
 # Runs Vite dev server for React frontend
 
-Write-Host "🎨 Starting MetaGuardian Frontend..." -ForegroundColor Cyan
+Write-Host "🎨 Starting S.C.O.P.E. Coach Frontend..." -ForegroundColor Cyan
 
 # Navigate to project root
 Set-Location $PSScriptRoot

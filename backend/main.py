@@ -147,7 +147,7 @@ async def generate_report(request: schemas.ReportRequest, db: Session = Depends(
         return val * 20 if val <= 5 else val
 
     prompt = f"""
-    You are a MetaGuardian qualitative research synthesizer. Create a comprehensive research interview summary based on the participant's session data.
+    You are a S.C.O.P.E. Coach qualitative research synthesizer. Create a comprehensive research interview summary based on the participant's session data.
 
     Participant Email: {request.email}
 
@@ -247,11 +247,11 @@ async def finalize_session(request: FinalizeSessionRequest, db: Session = Depend
 
         # Format dimensions for prompt
         dimension_labels = {
-            'HL': 'Health Literacy',
-            'CM': 'Clinical Markers',
-            'DI': 'Data Integration',
-            'DL': 'Digital Literacy',
-            'PR': 'Preventive Readiness'
+            'HL': 'Situation Awareness',
+            'CM': 'Choices Recognition',
+            'DI': 'Outcomes Visualization',
+            'DL': 'Purpose Alignment',
+            'PR': 'Engagement Commitment'
         }
 
         dimension_summaries = []
@@ -553,7 +553,7 @@ IMPORTANT: DO NOT include footer, copyright, or "© 2024" text. System adds offi
         mode = JourneyMode.MEDICAL if any(
             'medication' in str(f).lower() or 'insulin' in str(f).lower() 
             for f in fragments
-        ) else JourneyMode.PREVENTIVE
+        ) else JourneyMode.EEVENTIVE
         
         # Submit report for review (includes LLM harm detection via Claude)
         review_manager = ReviewQueueManager(db)

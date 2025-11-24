@@ -1,5 +1,5 @@
 """
-MetaGuardian Setup: Three-Tier Validation Architecture
+S.C.O.P.E. Coach Setup: Three-Tier Validation Architecture
 Install dependencies and initialize review queue database.
 """
 
@@ -30,7 +30,7 @@ def check_env_file():
         print(f"\n⚠️  WARNING: .env file not found at {env_path}")
         print("Creating template .env file...")
         with open(env_path, 'w') as f:
-            f.write("""# MetaGuardian Environment Variables
+            f.write("""# S.C.O.P.E. Coach Environment Variables
 
 # Required: Anthropic API for LLM Harm Detection
 ANTHROPIC_API_KEY=sk-ant-your-key-here
@@ -40,7 +40,7 @@ GROQ_API_KEY=your-groq-key-here
 
 # Email Configuration (SendGrid or similar)
 SENDGRID_API_KEY=your-sendgrid-key-here
-SENDGRID_FROM_EMAIL=reports@metaguardian.ai
+SENDGRID_FROM_EMAIL=reports@scope-coach.ai
 
 # Reviewer Configuration
 REVIEWER_EMAIL=regan@axiomintelligence.co.nz
@@ -68,7 +68,7 @@ def main():
     print("""
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║           MetaGuardian Setup Wizard                          ║
+║           S.C.O.P.E. Coach Setup Wizard                          ║
 ║           Three-Tier Validation Architecture                 ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝

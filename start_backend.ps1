@@ -1,7 +1,7 @@
-# MetaGuardian Backend Startup Script (Persistent)
+# S.C.O.P.E. Coach Backend Startup Script (Persistent)
 # This script ensures the backend stays running without auto-shutdown
 
-Write-Host "🚀 Starting MetaGuardian Backend (Persistent Mode)..." -ForegroundColor Cyan
+Write-Host "🚀 Starting S.C.O.P.E. Coach Backend (Persistent Mode)..." -ForegroundColor Cyan
 
 # Navigate to backend directory
 $BackendPath = "$PSScriptRoot\backend"

@@ -1,15 +1,15 @@
-# MetaGuardian Fork Report
+# S.C.O.P.E. Coach Fork Report
 
 **Date**: 2025-01-14  
 **Source**: [CultureCoach](https://github.com/lexziconAI/culture-coach)  
-**Target**: [MetaGuardian](https://github.com/lexziconAI/Meta-Guardian)  
+**Target**: [S.C.O.P.E. Coach](https://github.com/lexziconAI/Meta-Guardian)  
 **Status**: Infrastructure preserved, domain logic placeholders created
 
 ---
 
 ## Executive Summary
 
-MetaGuardian is a strategic fork of CultureCoach that **preserves 100% of the Constitutional AI infrastructure** while adapting the assessment domain from cultural competency to metabolic health readiness. This allows us to leverage a production-tested voice AI system for new research applications without rebuilding core functionality.
+S.C.O.P.E. Coach is a strategic fork of CultureCoach that **preserves 100% of the Constitutional AI infrastructure** while adapting the assessment domain from cultural competency to metabolic health readiness. This allows us to leverage a production-tested voice AI system for new research applications without rebuilding core functionality.
 
 ---
 
@@ -48,7 +48,7 @@ MetaGuardian is a strategic fork of CultureCoach that **preserves 100% of the Co
 
 | File | Purpose | Status |
 |------|---------|--------|
-| `src/prompts/metaguardian-system.ts` | System instruction for metabolic health coaching | PLACEHOLDER |
+| `src/prompts/scope-coach-system.ts` | System instruction for metabolic health coaching | PLACEHOLDER |
 | `src/types/assessment.ts` | Metabolic assessment structure (HL, CM, DI, DL, PR dimensions) | COMPLETE |
 | `src/data/interview-questions.ts` | 10 general public + 11 expert questions | PLACEHOLDER |
 | `src/services/scoring-engine.ts` | Dimension scoring algorithms | PLACEHOLDER |
@@ -57,14 +57,14 @@ MetaGuardian is a strategic fork of CultureCoach that **preserves 100% of the Co
 
 | File | Change | Reason |
 |------|--------|--------|
-| `package.json` | Updated name, description, repository URL | Rebrand to MetaGuardian |
-| `README.md` | Replaced content with MetaGuardian context | Documentation |
+| `package.json` | Updated name, description, repository URL | Rebrand to S.C.O.P.E. Coach |
+| `README.md` | Replaced content with S.C.O.P.E. Coach context | Documentation |
 
 ### Files To Be Modified (Next Phase)
 
 | File | Required Changes |
 |------|------------------|
-| `components/LiveVoiceCoach.tsx` | Replace SYSTEM_INSTRUCTION (line 129-229) with import from `metaguardian-system.ts` |
+| `components/LiveVoiceCoach.tsx` | Replace SYSTEM_INSTRUCTION (line 129-229) with import from `scope-coach-system.ts` |
 | `backend/main.py` | Update finalize-session prompt (line 215-290) with metabolic health report template |
 | `components/AssessmentDashboard.tsx` | Update dimension labels from cultural (DT, TR, CO, CA, EP) → metabolic (HL, CM, DI, DL, PR) |
 
@@ -72,7 +72,7 @@ MetaGuardian is a strategic fork of CultureCoach that **preserves 100% of the Co
 
 ## Dimensional Mapping
 
-| CultureCoach Dimension | MetaGuardian Dimension | Description Change |
+| CultureCoach Dimension | S.C.O.P.E. Coach Dimension | Description Change |
 |------------------------|------------------------|--------------------|
 | DT (Dialectical Thinking) | HL (Health Literacy) | Cultural complexity → Health concept understanding |
 | TR (Trust/Relational Intelligence) | CM (Clinical Markers) | Interpersonal trust → Biomarker familiarity |
@@ -85,7 +85,7 @@ MetaGuardian is a strategic fork of CultureCoach that **preserves 100% of the Co
 ## Technical Debt & Next Steps
 
 ### Immediate (Required for MVP)
-1. ✅ Complete `metaguardian-system.ts` system prompt
+1. ✅ Complete `scope-coach-system.ts` system prompt
 2. ✅ Define 21 interview questions in `interview-questions.ts`
 3. ✅ Implement `MetabolicScoringEngine` class
 4. ⚠️ Update `LiveVoiceCoach.tsx` to use new system prompt
@@ -126,7 +126,7 @@ MetaGuardian is a strategic fork of CultureCoach that **preserves 100% of the Co
 - Frontend: Node 20, Build Command `npm run build`, Output `dist`
 - Environment Variables:
   - `OPENAI_API_KEY`, `GROQ_API_KEY`, `SENDGRID_API_KEY` (backend)
-  - `VITE_API_URL` (frontend, e.g., `https://metaguardian-backend.onrender.com`)
+  - `VITE_API_URL` (frontend, e.g., `https://scope-coach-backend.onrender.com`)
 
 **CORS**: Currently set to wildcard `*` for development. Restrict to specific origins before production.
 
@@ -134,7 +134,7 @@ MetaGuardian is a strategic fork of CultureCoach that **preserves 100% of the Co
 
 ## License & Attribution
 
-MetaGuardian inherits the MIT license from CultureCoach.  
+S.C.O.P.E. Coach inherits the MIT license from CultureCoach.  
 Original infrastructure by lexziconAI.  
 Metabolic health domain adaptation by [Your Research Team].
 

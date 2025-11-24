@@ -146,7 +146,7 @@ async def test_review_queue():
                 "temperature": 0.75,
                 "fragments_count": len(test_fragments)
             },
-            mode=JourneyMode.PREVENTIVE,
+            mode=JourneyMode.EEVENTIVE,
             fragments=test_fragments,
             session_data={"summary": "User exploring metabolic health"}
         )
@@ -301,7 +301,7 @@ async def run_all_tests():
     print("""
 ╔══════════════════════════════════════════════════════════════════════╗
 ║                                                                      ║
-║          MetaGuardian Test Suite                                     ║
+║          S.C.O.P.E. Coach Test Suite                                     ║
 ║          Three-Tier Validation Architecture                          ║
 ║                                                                      ║
 ╚══════════════════════════════════════════════════════════════════════╝

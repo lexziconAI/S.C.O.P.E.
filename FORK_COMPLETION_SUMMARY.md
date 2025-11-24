@@ -1,4 +1,4 @@
-# MetaGuardian Fork Completion Summary
+# S.C.O.P.E. Coach Fork Completion Summary
 
 ## ✅ Fork Status: COMPLETE
 
@@ -10,7 +10,7 @@
 
 ## Files Created
 
-1. **src/prompts/metaguardian-system.ts** (PLACEHOLDER)
+1. **src/prompts/scope-coach-system.ts** (PLACEHOLDER)
    - Constitutional AI system prompt template
    - Yama principles framework defined
    - Needs final LLM prompt content
@@ -32,7 +32,7 @@
    - Constitutional AI validation hooks
 
 5. **README.md** (UPDATED)
-   - Full MetaGuardian documentation
+   - Full S.C.O.P.E. Coach documentation
    - Fork status clearly stated
    - Preserved infrastructure list
    - Setup instructions
@@ -47,7 +47,7 @@
 ## Files Modified
 
 1. **package.json**
-   - Name: `metaguardian-metabolic-health-assessment`
+   - Name: `scope-coach-metabolic-health-assessment`
    - Repository URL updated to Meta-Guardian
    - Description added
 
@@ -63,13 +63,13 @@
    - Dashboard title: "Current Cultural Profile" → "Metabolic Health Readiness"
 
 4. **components/LiveVoiceCoach.tsx**
-   - `SYSTEM_INSTRUCTION` replaced with MetaGuardian coaching prompt
+   - `SYSTEM_INSTRUCTION` replaced with S.C.O.P.E. Coach coaching prompt
    - Constitutional AI Yama principles added
    - Dimension descriptions updated (health literacy, clinical markers, etc.)
    - `updateAssessmentTool` schema updated with new dimension keys
 
 5. **App.tsx**
-   - Title: "CultureCoach" → "MetaGuardian"
+   - Title: "CultureCoach" → "S.C.O.P.E. Coach"
    - Info modal description updated for metabolic health context
 
 ---
@@ -89,7 +89,7 @@
 ## Build Verification
 
 ```bash
-cd MetaGuardian
+cd S.C.O.P.E. Coach
 npm install
 npm run build
 ```
@@ -101,7 +101,7 @@ npm run build
 ## Next Steps for Production
 
 ### Immediate (Required for First Test)
-1. Complete `src/prompts/metaguardian-system.ts` with full conversational prompt
+1. Complete `src/prompts/scope-coach-system.ts` with full conversational prompt
 2. Test voice conversation to verify dimension scoring works
 3. Update backend `finalize-session` report template for metabolic health
 4. Test email report generation
@@ -124,7 +124,7 @@ npm run build
 
 ## Key Differences from CultureCoach
 
-| Aspect | CultureCoach | MetaGuardian |
+| Aspect | CultureCoach | S.C.O.P.E. Coach |
 |--------|--------------|--------------|
 | **Domain** | Cross-cultural communication | Metabolic health readiness |
 | **Dimensions** | DT, TR, CO, CA, EP (cultural) | HL, CM, DI, DL, PR (health) |
@@ -150,7 +150,7 @@ npm run build
 
 ## Contact
 
-For questions about the fork or MetaGuardian development:  
+For questions about the fork or S.C.O.P.E. Coach development:  
 **GitHub Issues**: https://github.com/lexziconAI/Meta-Guardian/issues  
 **Original CultureCoach**: https://github.com/lexziconAI/culture-coach
 

@@ -1,5 +1,5 @@
 """
-Constitutional AI Validation for MetaGuardian Quantum Storytelling
+Constitutional AI Validation for S.C.O.P.E. Coach Quantum Storytelling
 Based on Yama Principles - ethical guardrails for health narratives
 
 CONSTITUTIONAL RECEIPT SYSTEM:

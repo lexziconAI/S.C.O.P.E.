@@ -1,5 +1,5 @@
 """
-LLM Harm Detection Pre-Screener for MetaGuardian
+LLM Harm Detection Pre-Screener for S.C.O.P.E. Coach
 Uses Claude to analyze Groq-generated reports for potential harm.
 This catches subtle issues that regex patterns miss.
 """

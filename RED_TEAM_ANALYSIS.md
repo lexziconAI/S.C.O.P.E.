@@ -1,4 +1,4 @@
-# MetaGuardian: Red Team Security & Ethics Analysis
+# S.C.O.P.E. Coach: Red Team Security & Ethics Analysis
 **Date**: November 23, 2025  
 **System**: Quantum Storytelling Health AI  
 **Scope**: Scoring logic, inference rules, Constitutional AI, data handling

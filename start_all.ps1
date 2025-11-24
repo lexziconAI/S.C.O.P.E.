@@ -1,7 +1,7 @@
-# MetaGuardian Full Stack Launcher
+# S.C.O.P.E. Coach Full Stack Launcher
 # Starts both backend and frontend in separate persistent PowerShell windows
 
-Write-Host "🌟 Launching MetaGuardian Full Stack..." -ForegroundColor Magenta
+Write-Host "🌟 Launching S.C.O.P.E. Coach Full Stack..." -ForegroundColor Magenta
 Write-Host "========================================`n" -ForegroundColor Magenta
 
 $ScriptDir = $PSScriptRoot
@@ -30,4 +30,4 @@ Write-Host ""
 Write-Host "To stop services: Close the PowerShell windows" -ForegroundColor Yellow
 Write-Host "To view logs: Check the separate terminal windows" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "MetaGuardian is ready for testing!" -ForegroundColor Green
+Write-Host "S.C.O.P.E. Coach is ready for testing!" -ForegroundColor Green

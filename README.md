@@ -30,4 +30,4 @@ A voice-powered AI coach that provides growth-oriented feedback using the S.C.O.
 4. Run: `npm run dev` (frontend), `uvicorn main:app` (backend)
 
 ## Forked From
-MetaGuardian - Axiom Intelligence
+S.C.O.P.E. Coach - Axiom Intelligence

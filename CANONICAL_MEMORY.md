@@ -1,7 +1,7 @@
-# MetaGuardian Canonical Memory
+# S.C.O.P.E. Coach Canonical Memory
 
 ## Purpose
-This document captures canonical working implementations, lessons learned, and anti-patterns discovered during MetaGuardian development. Use this as a reference when forking to create new Constitutional AI bots (e.g., S.C.O.P.E. Coach).
+This document captures canonical working implementations, lessons learned, and anti-patterns discovered during S.C.O.P.E. Coach development. Use this as a reference when forking to create new Constitutional AI bots (e.g., S.C.O.P.E. Coach).
 
 ---
 

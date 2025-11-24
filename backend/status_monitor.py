@@ -1,5 +1,5 @@
 """
-MetaGuardian Status Monitor
+S.C.O.P.E. Coach Status Monitor
 Provides real-time status updates every 30 seconds
 """
 import time
@@ -120,7 +120,7 @@ def main():
     print("""
 ╔══════════════════════════════════════════════════════════════════════╗
 ║                                                                      ║
-║          MetaGuardian Status Monitor                                 ║
+║          S.C.O.P.E. Coach Status Monitor                                 ║
 ║          Real-time updates every 30 seconds                          ║
 ║                                                                      ║
 ║          Press Ctrl+C to stop monitoring                             ║

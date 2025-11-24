@@ -180,11 +180,11 @@ const ScoreEvolutionChart: React.FC<{ history: SessionState['scoreHistory'] }> =
   const data = {
     labels,
     datasets: [
-      { label: 'Health Literacy (HL)', data: displayHistory.map(h => normalize(h.HL)), borderColor: '#ef4444', backgroundColor: '#ef4444', tension: 0.4, pointRadius: 4, borderWidth: 2.5 },
-      { label: 'Clinical Markers (CM)', data: displayHistory.map(h => normalize(h.CM)), borderColor: '#f59e0b', backgroundColor: '#f59e0b', tension: 0.4, pointRadius: 4, borderWidth: 2.5 },
-      { label: 'Data Integration (DI)', data: displayHistory.map(h => normalize(h.DI)), borderColor: '#10b981', backgroundColor: '#10b981', tension: 0.4, pointRadius: 4, borderWidth: 2.5 },
-      { label: 'Digital Literacy (DL)', data: displayHistory.map(h => normalize(h.DL)), borderColor: '#3b82f6', backgroundColor: '#3b82f6', tension: 0.4, pointRadius: 4, borderWidth: 2.5 },
-      { label: 'Preventive Readiness (PR)', data: displayHistory.map(h => normalize(h.PR)), borderColor: '#8b5cf6', backgroundColor: '#8b5cf6', tension: 0.4, pointRadius: 4, borderWidth: 2.5 },
+      { label: 'Situation Awareness (HL)', data: displayHistory.map(h => normalize(h.S)), borderColor: '#ef4444', backgroundColor: '#ef4444', tension: 0.4, pointRadius: 4, borderWidth: 2.5 },
+      { label: 'Choices Recognition (CM)', data: displayHistory.map(h => normalize(h.C)), borderColor: '#f59e0b', backgroundColor: '#f59e0b', tension: 0.4, pointRadius: 4, borderWidth: 2.5 },
+      { label: 'Outcomes Visualization (DI)', data: displayHistory.map(h => normalize(h.O)), borderColor: '#10b981', backgroundColor: '#10b981', tension: 0.4, pointRadius: 4, borderWidth: 2.5 },
+      { label: 'Purpose Alignment (DL)', data: displayHistory.map(h => normalize(h.P)), borderColor: '#3b82f6', backgroundColor: '#3b82f6', tension: 0.4, pointRadius: 4, borderWidth: 2.5 },
+      { label: 'Engagement Commitment (PR)', data: displayHistory.map(h => normalize(h.E)), borderColor: '#8b5cf6', backgroundColor: '#8b5cf6', tension: 0.4, pointRadius: 4, borderWidth: 2.5 },
     ]
   };
 

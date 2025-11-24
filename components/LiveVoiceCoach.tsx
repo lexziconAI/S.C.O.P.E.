@@ -133,7 +133,7 @@ const MicLevelIndicator: React.FC<MicLevelProps> = ({ level, threshold, isActive
 type UserType = 'expert' | 'general' | null;
 
 const EXPERT_PROMPT = `
-You are "MetaGuardian", conducting qualitative research through natural conversation with healthcare experts and professionals.
+You are "S.C.O.P.E. Coach", conducting qualitative research through natural conversation with healthcare experts and professionals.
 
 ## YOUR ROLE: PEER RESEARCHER
 
@@ -170,7 +170,7 @@ Remember: You are conducting research, not teaching. Listen more than you speak.
 `;
 
 const GENERAL_PUBLIC_PROMPT = `
-You are "MetaGuardian", conducting qualitative research through natural, supportive conversation with members of the general public.
+You are "S.C.O.P.E. Coach", conducting qualitative research through natural, supportive conversation with members of the general public.
 
 ## YOUR ROLE: EMPATHETIC LISTENER
 
@@ -240,7 +240,7 @@ All these terms refer to health/nutrition, NEVER environmental concepts:
 
 ---
 
-You are "MetaGuardian", but not an assessor—you are a STORY MIDWIFE, helping metabolic health stories be born into the world. You work with David Boje's Quantum Storytelling framework.
+You are "S.C.O.P.E. Coach", but not an assessor—you are a STORY MIDWIFE, helping metabolic health stories be born into the world. You work with David Boje's Quantum Storytelling framework.
 
 ## YOUR TRUE NATURE: ANTENARRATIVE CATALYST
 
@@ -262,27 +262,27 @@ Antenarratives are chaotic, fragmented "before-stories" that haven't crystallize
 
 You are tracking five LIVING STORIES, not static dimensions:
 
-1. **BODY KNOWLEDGE STREAM** (was: Health Literacy - HL)
+1. **BODY KNOWLEDGE STREAM** (was: Situation Awareness - HL)
    - How does the user STORY their relationship with bodily information?
    - Grand narratives: Medical authority, Folk wisdom, Embodied knowing
    - Antenarratives: "I'm learning...", "I used to think...", "Nobody told me..."
 
-2. **BIOMARKER MYTHOLOGY STREAM** (was: Clinical Markers - CM)
+2. **BIOMARKER MYTHOLOGY STREAM** (was: Choices Recognition - CM)
    - What STORIES do lab numbers tell? What stories do they silence?
    - Grand narratives: Quantified self, Medical surveillance, Body as machine
    - Antenarratives: "The doctor said...", "I'm afraid to know...", "Numbers lie/don't lie..."
 
-3. **DATA SYNTHESIS NARRATIVE** (was: Data Integration - DI)
+3. **DATA SYNTHESIS NARRATIVE** (was: Outcomes Visualization - DI)
    - How does the user STORY the connection between daily life and health outcomes?
    - Grand narratives: Holistic wellness, Reductionist medicine, Cause-effect mythology
    - Antenarratives: "I wonder if...", "Maybe it's because...", "I never connected..."
 
-4. **TECHNOLOGY RELATIONSHIP STORY** (was: Digital Literacy - DL)
+4. **TECHNOLOGY RELATIONSHIP STORY** (was: Purpose Alignment - DL)
    - What's the user's LIVED STORY with health tech? (Not skill level—STORY)
    - Grand narratives: Tech solutionism, Privacy fears, Empowerment discourse
    - Antenarratives: "I tried this app...", "I don't trust...", "I wish there was..."
 
-5. **FUTURE HEALTH IMAGINARY** (was: Preventive Readiness - PR)
+5. **FUTURE HEALTH IMAGINARY** (was: Engagement Commitment - PR)
    - What POSSIBLE FUTURES does the user narrate? Which feel real?
    - Grand narratives: Preventive medicine, Fatalism, Genetic determinism
    - Antenarratives: "I'm worried about...", "I hope I can...", "If I start now..."
@@ -372,11 +372,11 @@ You are connected to a real-time visualization dashboard.
 
 ### DIMENSION SCORING (0-5 scale):
 Map the five narrative streams to their dimension codes:
-- **HL** (Health Literacy) = BODY KNOWLEDGE STREAM
-- **CM** (Clinical Markers) = BIOMARKER MYTHOLOGY STREAM
-- **DI** (Data Integration) = DATA SYNTHESIS NARRATIVE
-- **DL** (Digital Literacy) = TECHNOLOGY RELATIONSHIP STORY
-- **PR** (Preventive Readiness) = FUTURE HEALTH IMAGINARY
+- **HL** (Situation Awareness) = BODY KNOWLEDGE STREAM
+- **CM** (Choices Recognition) = BIOMARKER MYTHOLOGY STREAM
+- **DI** (Outcomes Visualization) = DATA SYNTHESIS NARRATIVE
+- **DL** (Purpose Alignment) = TECHNOLOGY RELATIONSHIP STORY
+- **PR** (Engagement Commitment) = FUTURE HEALTH IMAGINARY
 
 **BASELINE SCORING RULE - CRITICAL**:
 - Start ALL dimensions at exactly 2.5 (50%) - this is the neutral baseline
@@ -411,22 +411,22 @@ Map the five narrative streams to their dimension codes:
 \`\`\`json
 {
   "dimensions": {
-    "HL": { "score": 3, "confidence": "LOW|MEDIUM|HIGH", "evidenceCount": 1, "trend": "up|down|stable" },
-    "CM": { "score": 2, "confidence": "LOW", "evidenceCount": 0, "trend": "stable" },
-    "DI": { "score": 3, "confidence": "LOW", "evidenceCount": 0, "trend": "stable" },
-    "DL": { "score": 4, "confidence": "MEDIUM", "evidenceCount": 1, "trend": "up" },
-    "PR": { "score": 2, "confidence": "LOW", "evidenceCount": 0, "trend": "stable" }
+    "S": { "score": 3, "confidence": "LOW|MEDIUM|HIGH", "evidenceCount": 1, "trend": "up|down|stable" },
+    "C": { "score": 2, "confidence": "LOW", "evidenceCount": 0, "trend": "stable" },
+    "O": { "score": 3, "confidence": "LOW", "evidenceCount": 0, "trend": "stable" },
+    "P": { "score": 4, "confidence": "MEDIUM", "evidenceCount": 1, "trend": "up" },
+    "E": { "score": 2, "confidence": "LOW", "evidenceCount": 0, "trend": "stable" }
   },
   "newEvidence": {
-    "dimension": "HL",
+    "dimension": "S",
     "type": "positive|negative|contextual",
     "summary": "User demonstrated understanding of glucose patterns",
     "timestamp": "0:45"
   },
   "phase": "OPENING|CORE|GAP_FILLING|VALIDATION|CLOSING",
   "summary": "Brief summary of session so far",
-  "strengths": ["HL", "DL"],
-  "developmentPriorities": ["CM", "PR"]
+  "strengths": ["S", "P"],
+  "developmentPriorities": ["C", "E"]
 }
 \`\`\`
 
@@ -455,7 +455,7 @@ const updateAssessmentStateTool = {
         type: "object",
         description: "New evidence extracted from the user's response",
         properties: {
-          dimension: { type: "string", enum: ["HL", "CM", "DI", "DL", "PR"] },
+          dimension: { type: "string", enum: ["S", "C", "O", "P", "E"] },
           type: { type: "string", enum: ["positive", "negative", "contextual"] },
           summary: { type: "string" },
           timestamp: { type: "string" }
@@ -482,7 +482,7 @@ const updateAssessmentStateTool = {
 };
 
 const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
-  const [connectionState, setConnectionState] = useState<ConnectionState>(ConnectionState.DISCONNECTED);
+  const [connectionState, setConnectionState] = useState<ConnectionState>(ConnectionState.OSCONNECTED);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -640,7 +640,7 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
     if ((window as any).aistudio) {
       try {
         disconnect();
-        setConnectionState(ConnectionState.DISCONNECTED);
+        setConnectionState(ConnectionState.OSCONNECTED);
         setErrorMsg(null);
         await (window as any).aistudio.openSelectKey();
         setHasApiKey(true);
@@ -1062,17 +1062,17 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
 
                                 // Log what we received for debugging
                                 console.log(`[DEBUG] Dimensions received: ${received.join(', ')}`);
-                                console.log(`[DEBUG] Scores: HL=${updated.dimensions.HL?.score}, CM=${updated.dimensions.CM?.score}, DI=${updated.dimensions.DI?.score}, DL=${updated.dimensions.DL?.score}, PR=${updated.dimensions.PR?.score}`);
+                                console.log(`[DEBUG] Scores: HL=${updated.dimensions.S?.score}, CM=${updated.dimensions.C?.score}, DI=${updated.dimensions.O?.score}, DL=${updated.dimensions.P?.score}, PR=${updated.dimensions.E?.score}`);
 
                                 // UPDATE SCORE HISTORY (needed for trajectory chart)
                                 const elapsed = Math.floor((Date.now() - sessionStartTimeRef.current) / 1000);
                                 const newPoint = {
                                     time: elapsed,
-                                    HL: updated.dimensions.HL?.score ?? 2.5,
-                                    CM: updated.dimensions.CM?.score ?? 2.5,
-                                    DI: updated.dimensions.DI?.score ?? 2.5,
-                                    DL: updated.dimensions.DL?.score ?? 2.5,
-                                    PR: updated.dimensions.PR?.score ?? 2.5
+                                    HL: updated.dimensions.S?.score ?? 2.5,
+                                    CM: updated.dimensions.C?.score ?? 2.5,
+                                    DI: updated.dimensions.O?.score ?? 2.5,
+                                    DL: updated.dimensions.P?.score ?? 2.5,
+                                    PR: updated.dimensions.E?.score ?? 2.5
                                 };
                                 if (!updated.scoreHistory) updated.scoreHistory = [];
                                 updated.scoreHistory = [...updated.scoreHistory, newPoint];
@@ -1152,7 +1152,7 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
         console.log('OpenAI Session Closed');
         setConnectionState(prev => {
             if (prev === ConnectionState.ERROR || prev === ConnectionState.COMPLETE) return prev;
-            return ConnectionState.DISCONNECTED;
+            return ConnectionState.OSCONNECTED;
         });
       };
 
@@ -1248,7 +1248,7 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
 
   const renderStatus = () => {
     switch (connectionState) {
-      case ConnectionState.DISCONNECTED: return <span className="text-slate-500">Ready to start</span>;
+      case ConnectionState.OSCONNECTED: return <span className="text-slate-500">Ready to start</span>;
       case ConnectionState.CONNECTING: return <span className="text-indigo-600 animate-pulse">Connecting...</span>;
       case ConnectionState.CONNECTED: 
         if (isPaused) return <span className="text-amber-500 font-medium">Session Paused</span>;
@@ -1266,7 +1266,7 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
         <div className="absolute inset-0 z-50 bg-white flex items-center justify-center rounded-2xl p-6">
           <div className="w-full max-w-2xl animate-fade-in-up">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-slate-800 mb-2">Welcome to MetaGuardian</h2>
+              <h2 className="text-2xl font-bold text-slate-800 mb-2">Welcome to S.C.O.P.E. Coach</h2>
               <p className="text-slate-600">Please select your background to help us tailor the conversation</p>
             </div>
 
@@ -1356,7 +1356,7 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
                 onClick={() => {
                     setShowEmailModal(false);
                     disconnect();
-                    setConnectionState(ConnectionState.DISCONNECTED);
+                    setConnectionState(ConnectionState.OSCONNECTED);
                 }}
                 className="w-full py-2 text-slate-500 hover:text-slate-700 text-sm"
               >
@@ -1369,7 +1369,7 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
 
       {/* Top Section: Visualizer or Final Report Header */}
       <div className="relative bg-slate-900 rounded-xl overflow-hidden h-48 mb-8 flex items-center justify-center">
-        {connectionState === ConnectionState.DISCONNECTED || connectionState === ConnectionState.ERROR ? (
+        {connectionState === ConnectionState.OSCONNECTED || connectionState === ConnectionState.ERROR ? (
              <div className="text-slate-400 flex flex-col items-center gap-2">
                 <Volume2 className="w-10 h-10 opacity-50" />
                 <p className="text-sm">Audio Visualizer</p>
@@ -1440,7 +1440,7 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
             </button>
           ) : (
             <>
-              {(connectionState === ConnectionState.DISCONNECTED || connectionState === ConnectionState.ERROR || connectionState === ConnectionState.CONNECTING || connectionState === ConnectionState.COMPLETE) ? (
+              {(connectionState === ConnectionState.OSCONNECTED || connectionState === ConnectionState.ERROR || connectionState === ConnectionState.CONNECTING || connectionState === ConnectionState.COMPLETE) ? (
                 <button
                   onClick={connectToOpenAI}
                   disabled={connectionState === ConnectionState.CONNECTING}
@@ -1504,7 +1504,7 @@ const LiveVoiceCoach: React.FC<{ token: string }> = ({ token }) => {
         )}
 
         {/* Initial Tips */}
-        {connectionState === ConnectionState.DISCONNECTED && !errorMsg && (
+        {connectionState === ConnectionState.OSCONNECTED && !errorMsg && (
           <div className="mt-4 p-4 bg-indigo-50 rounded-lg border border-indigo-100 text-indigo-800 text-sm text-center max-w-md">
             <p className="font-medium mb-1">Ready to explore your health story?</p>
             <p className="opacity-80">Start a voice conversation to discover your metabolic health narrative through quantum storytelling.</p>

@@ -32,14 +32,14 @@ def normalize_footer(html: str) -> str:
 def get_logo_base64_content():
     # Use path relative to this file to work in both Windows and WSL
     import pathlib
-    current_dir = pathlib.Path(__file__).parent.parent  # Go up from backend/ to MetaGuardian/
+    current_dir = pathlib.Path(__file__).parent.parent  # Go up from backend/ to S.C.O.P.E. Coach/
     logo_path = current_dir / "public" / "logo.png"
 
     # Fallback paths for different environments
     fallback_paths = [
         logo_path,
-        pathlib.Path("/mnt/c/Users/regan/ID SYSTEM/MetaGuardian/public/logo.png"),
-        pathlib.Path(r"c:\Users\regan\ID SYSTEM\MetaGuardian\public\logo.png"),
+        pathlib.Path("/mnt/c/Users/regan/ID SYSTEM/S.C.O.P.E. Coach/public/logo.png"),
+        pathlib.Path(r"c:\Users\regan\ID SYSTEM\S.C.O.P.E. Coach\public\logo.png"),
     ]
 
     for path in fallback_paths:

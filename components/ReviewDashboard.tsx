@@ -1,6 +1,6 @@
 /**
  * ReviewDashboard.tsx
- * Human reviewer interface for MetaGuardian report approval
+ * Human reviewer interface for S.C.O.P.E. Coach report approval
  * 
  * Features:
  * - List pending reports with risk badges
@@ -191,7 +191,7 @@ const ReviewDashboard: React.FC = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            🛡️ MetaGuardian Review Dashboard
+            🛡️ S.C.O.P.E. Coach Review Dashboard
           </h1>
           <p className="text-gray-600">
             Human oversight for AI-generated health reports

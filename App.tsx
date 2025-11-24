@@ -55,7 +55,7 @@ const App: React.FC = () => {
         <div className="max-w-5xl mx-auto px-4 h-36 flex items-center justify-between">
           <div className="flex items-center gap-2 text-indigo-600">
             <img src="/logo.png" alt="Axiom Logo" className="h-32 w-auto" />
-            <h1 className="font-bold text-xl tracking-tight">MetaGuardian</h1>
+            <h1 className="font-bold text-xl tracking-tight">S.C.O.P.E. Coach</h1>
           </div>
           <div className="flex items-center gap-2">
             <button 
@@ -83,10 +83,10 @@ const App: React.FC = () => {
         {/* Info Modal / Overlay */}
         {showInfo && (
           <div className="absolute top-4 right-4 max-w-sm bg-white p-6 rounded-xl shadow-xl border border-slate-100 z-20 animate-fade-in-down">
-            <h3 className="font-semibold text-lg mb-2">About MetaGuardian</h3>
+            <h3 className="font-semibold text-lg mb-2">About S.C.O.P.E. Coach</h3>
             <p className="text-slate-600 text-sm mb-4 leading-relaxed">
               This is an Axiom Intelligence Powered Experience – Interactive Oral Assessments as a Service (IOAaaS)
-              brought to you by the Axiom Intelligence API. MetaGuardian assesses your readiness for AI-assisted
+              brought to you by the Axiom Intelligence API. S.C.O.P.E. Coach assesses your readiness for AI-assisted
               early disease detection tools through natural voice conversations.
             </p>
             <button 
@@ -103,7 +103,7 @@ const App: React.FC = () => {
             <>
               <div className="text-center space-y-2 max-w-2xl">
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-                  MetaGuardian Health Assessment
+                  S.C.O.P.E. Coach Health Assessment
                 </h2>
                 <p className="text-slate-500 text-lg">
                   Start a real-time voice conversation to assess your metabolic health readiness with AI-powered guidance.

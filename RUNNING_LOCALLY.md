@@ -1,4 +1,4 @@
-# Running MetaGuardian Locally
+# Running S.C.O.P.E. Coach Locally
 
 ## 🎯 Current Status: RUNNING ✅
 
@@ -15,7 +15,7 @@
 
 ## 🚀 Quick Start (Services Already Running)
 
-Your MetaGuardian application is **currently running**! Just open:
+Your S.C.O.P.E. Coach application is **currently running**! Just open:
 
 ```
 http://localhost:5500
@@ -46,14 +46,14 @@ http://localhost:5500
 
 #### Backend (Terminal 1)
 ```powershell
-cd "c:\Users\regan\ID SYSTEM\MetaGuardian\backend"
+cd "c:\Users\regan\ID SYSTEM\S.C.O.P.E. Coach\backend"
 python -c "from database import init_quantum_db; init_quantum_db()"
 python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 #### Frontend (Terminal 2)
 ```powershell
-cd "c:\Users\regan\ID SYSTEM\MetaGuardian"
+cd "c:\Users\regan\ID SYSTEM\S.C.O.P.E. Coach"
 npm run dev
 ```
 
@@ -90,7 +90,7 @@ npm run dev
 - `SECRET_KEY` - JWT authentication
 
 **Database:**
-- Location: `backend/metaguardian_quantum.db`
+- Location: `backend/scope-coach_quantum.db`
 - Tables: 6 quantum storytelling tables
 - Auto-initialized on startup
 
@@ -174,7 +174,7 @@ wscat -c "ws://localhost:8000/ws/openai-relay?token=YOUR_JWT_TOKEN"
 ### 2. Start Voice Session
 - Click "Start Session" button
 - Allow microphone access
-- Speak to MetaGuardian
+- Speak to S.C.O.P.E. Coach
 
 ### 3. Watch Real-time Updates
 - Dashboard updates as you speak
@@ -216,7 +216,7 @@ cd backend
 # Install DB Browser for SQLite or use Python
 python
 >>> import sqlite3
->>> conn = sqlite3.connect('metaguardian_quantum.db')
+>>> conn = sqlite3.connect('scope-coach_quantum.db')
 >>> cursor = conn.cursor()
 >>> cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
 >>> print(cursor.fetchall())
@@ -272,7 +272,7 @@ git push origin main
 # render.yaml
 services:
   - type: web
-    name: metaguardian-backend
+    name: scope-coach-backend
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -286,7 +286,7 @@ services:
 **Frontend:**
 ```yaml
   - type: web
-    name: metaguardian-frontend
+    name: scope-coach-frontend
     env: node
     buildCommand: npm install && npm run build
     startCommand: npm run preview
@@ -310,7 +310,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 - **Keep terminals open**: Don't close the PowerShell windows running services
 - **Check logs first**: Most issues show up in terminal output
-- **Database resets**: Delete `metaguardian_quantum.db` and restart backend to reset
+- **Database resets**: Delete `scope-coach_quantum.db` and restart backend to reset
 - **Hot reload**: Both backend and frontend auto-reload on code changes
 - **API testing**: Use http://localhost:8000/docs for interactive API testing
 

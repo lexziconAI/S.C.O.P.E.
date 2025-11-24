@@ -1,5 +1,5 @@
 /**
- * MetaGuardian Assessment Types
+ * S.C.O.P.E. Coach Assessment Types
  * Replaces Culture Coach dimensions with metabolic health assessment structure
  */
 
@@ -15,11 +15,11 @@ export interface MetabolicAssessment {
   // TODO: Define metabolic health assessment dimensions
   // Examples (to be validated with research):
   dimensions: {
-    HL?: MetabolicDimension;  // Health Literacy
-    DL?: MetabolicDimension;  // Digital Literacy  
+    HL?: MetabolicDimension;  // Situation Awareness
+    DL?: MetabolicDimension;  // Purpose Alignment  
     CM?: MetabolicDimension;  // Clinical Marker Awareness
     PR?: MetabolicDimension;  // Prevention Readiness
-    DI?: MetabolicDimension;  // Data Integration Comfort
+    DI?: MetabolicDimension;  // Outcomes Visualization Comfort
   };
   
   // Infrastructure preserved from Culture Coach
@@ -37,7 +37,7 @@ export interface MetabolicAssessment {
   developmentPriorities: string[];
   summary?: string;
   
-  // MetaGuardian-specific (to be implemented)
+  // S.C.O.P.E. Coach-specific (to be implemented)
   participantType?: 'general_public' | 'healthcare_expert';
   roughData?: LifestyleDataSnapshot;
   preciseData?: ClinicalDataSnapshot;
@@ -102,7 +102,7 @@ export enum ConnectionState {
   COMPLETE = 'COMPLETE'
 }
 
-// Session state (adapted for MetaGuardian)
+// Session state (adapted for S.C.O.P.E. Coach)
 export interface SessionState extends MetabolicAssessment {
   turnCount: number;
 }

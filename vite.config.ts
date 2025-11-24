@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
         emptyOutDir: true,
       },
       preview: {
-        allowedHosts: ['metaguardian-frontend.onrender.com', '.onrender.com'],
+        allowedHosts: ['scope-coach-frontend.onrender.com', '.onrender.com'],
       },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
