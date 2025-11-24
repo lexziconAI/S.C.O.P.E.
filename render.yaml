@@ -26,11 +26,10 @@ services:
     autoDeploy: true
 
   # Frontend - Static Site (FREE)
-  - type: web
-    runtime: static
+  - type: static
     name: scope-coach-frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: dist
+    publishDir: dist
     envVars:
       - key: VITE_API_URL
         fromService:
