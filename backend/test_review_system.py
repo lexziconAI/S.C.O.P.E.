@@ -146,7 +146,7 @@ async def test_review_queue():
                 "temperature": 0.75,
                 "fragments_count": len(test_fragments)
             },
-            mode=JourneyMode.EEVENTIVE,
+            mode=JourneyMode.PREVENTIVE,
             fragments=test_fragments,
             session_data={"summary": "User exploring personal development"}
         )

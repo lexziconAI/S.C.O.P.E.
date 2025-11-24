@@ -496,7 +496,10 @@ const updateAssessmentStateTool = {
         }
       },
       phase: { type: "string", enum: ["OPENING", "CORE", "GAP_FILLING", "VALIDATION", "CLOSING"] },
-      isComplete: { type: "boolean" },
+      isComplete: {
+        type: "boolean",
+        description: "ONLY set to true when the user explicitly requests to end the session OR after at least 15 substantive exchanges covering all 5 S.C.O.P.E. dimensions with HIGH confidence. Default is false. DO NOT end session early - users expect a thorough 10-15 minute conversation."
+      },
       summary: { type: "string" },
       strengths: { type: "array", items: { type: "string" } },
       developmentPriorities: { type: "array", items: { type: "string" } }

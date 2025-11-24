@@ -553,7 +553,7 @@ IMPORTANT: DO NOT include footer, copyright, or "© 2024" text. System adds offi
         mode = JourneyMode.MEDICAL if any(
             'medication' in str(f).lower() or 'insulin' in str(f).lower() 
             for f in fragments
-        ) else JourneyMode.EEVENTIVE
+        ) else JourneyMode.PREVENTIVE
         
         # Submit report for review (includes LLM harm detection via Claude)
         review_manager = ReviewQueueManager(db)
