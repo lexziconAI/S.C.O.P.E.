@@ -1,5 +1,5 @@
 // API Configuration
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
 export const getApiUrl = (endpoint: string): string => {
   // In development, use localhost:8000
@@ -14,5 +14,5 @@ export const getWebSocketUrl = (endpoint: string): string => {
     return `${wsUrl}${endpoint}`;
   }
   // Development fallback - use backend WebSocket port
-  return `ws://localhost:8000${endpoint}`;
+  return `ws://localhost:8001${endpoint}`;
 };
