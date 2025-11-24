@@ -1,25 +1,10 @@
 services:
-  # Frontend - Vite React App
-  - type: web
-    runtime: node
-    name: scope-coach-frontend
-    plan: free
-    buildCommand: npm install && npm run build
-    startCommand: npm run preview -- --host 0.0.0.0 --port $PORT
-    envVars:
-      - key: NODE_VERSION
-        value: "20"
-      - key: VITE_API_BASE_URL
-        fromService:
-          name: scope-coach-backend
-          type: web
-          property: host
-
-  # Backend - Python FastAPI
+  # Backend - Python FastAPI (Starter plan - $7/month)
   - type: web
     runtime: python
     name: scope-coach-backend
-    plan: free
+    plan: starter
+    region: oregon
     rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -38,3 +23,27 @@ services:
         sync: false
       - key: SENDGRID_FROM_EMAIL
         sync: false
+    autoDeploy: true
+
+  # Frontend - Static Site (FREE)
+  - type: web
+    runtime: static
+    name: scope-coach-frontend
+    region: oregon
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          name: scope-coach-backend
+          type: web
+          property: hostport
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    autoDeploy: true
